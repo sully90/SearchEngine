@@ -68,7 +68,7 @@ public class SearchEngineService {
         return ok(movies);
     }
 
-    public static QueryBuilder buildQuery(String queryText, Map<String, Double> fieldWeights) {
+    private static QueryBuilder buildQuery(String queryText, Map<String, Double> fieldWeights) {
         QueryBuilder match = QueryBuilders.multiMatchQuery(
                 queryText, "title", "overview", "tagLine"
         );
