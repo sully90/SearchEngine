@@ -23,7 +23,7 @@ public class HttpResponse {
         try {
             return Response.status(HttpStatusCode.OK.getCode()).entity(objectMapper.writeValueAsString(entities)).build();
         } catch (JsonProcessingException e) {
-            return Response.status(HttpStatusCode.INTERNAL_SERVER_ERROR.getCode()).entity(e).build();
+            return internalServerError(e);
         }
     }
 
