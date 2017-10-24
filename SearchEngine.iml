@@ -14,6 +14,17 @@
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-server:1.8" level="project" />
     <orderEntry type="library" name="Maven: asm:asm:3.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-core:1.8" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.jersey:jersey-json:1.8" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jettison:jettison:1.1" level="project" />
+    <orderEntry type="library" name="Maven: stax:stax-api:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.3-1" level="project" />
+    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.2.2" level="project" />
+    <orderEntry type="library" name="Maven: javax.xml.stream:stax-api:1.0-2" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.7.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.7.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-jaxrs:1.7.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-xc:1.7.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:mongodb-driver:3.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:bson:3.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:mongodb-driver-core:3.5.0" level="project" />
@@ -92,7 +103,6 @@
     <orderEntry type="library" name="Maven: xalan:xalan:2.7.0" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:2.1" level="project" />
     <orderEntry type="library" name="Maven: de.jollyday:jollyday:0.4.7" level="project" />
-    <orderEntry type="library" name="Maven: javax.xml.bind:jaxb-api:2.2.7" level="project" />
     <orderEntry type="library" name="Maven: com.googlecode.efficient-java-matrix-library:ejml:0.23" level="project" />
     <orderEntry type="library" name="Maven: javax.json:javax.json-api:1.0" level="project" />
     <orderEntry type="library" name="Maven: edu.stanford.nlp:stanford-corenlp:3.5.2" level="project" />

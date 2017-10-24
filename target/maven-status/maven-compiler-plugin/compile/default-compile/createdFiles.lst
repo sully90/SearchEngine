@@ -3,6 +3,7 @@ com/sully90/core/persistence/elastic/ml/builders/ScriptBuilder.class
 com/sully90/core/persistence/mongo/util/FindableObject.class
 com/sully90/core/ml/nlp/stanford/StanfordNLPHelper.class
 com/sully90/core/ml/neuralnet/Net.class
+com/sully90/http/HttpStatusCode.class
 com/sully90/core/persistence/elastic/client/bulk/configuration/BulkProcessorConfiguration.class
 com/sully90/core/persistence/elastic/utils/ElasticUtils.class
 com/sully90/core/persistence/elastic/query/QueryHelper.class
@@ -17,6 +18,7 @@ com/sully90/core/persistence/elastic/utils/ElasticIndex.class
 com/sully90/core/ml/neuralnet/models/Layer.class
 com/sully90/core/persistence/elastic/client/DefaultElasticSearchClient.class
 com/sully90/core/utils/Duration.class
+com/sully90/http/HttpResponse.class
 com/sully90/rest/Listener.class
 com/sully90/core/persistence/elastic/client/bulk/listener/LoggingBulkProcessorListener.class
 com/sully90/core/persistence/mongo/util/ObjectWriter.class
@@ -31,6 +33,7 @@ com/sully90/core/persistence/elastic/ElasticHelper$Host.class
 com/sully90/core/persistence/elastic/client/ElasticSearchClient.class
 com/sully90/core/models/Movie.class
 com/sully90/core/persistence/mongo/util/DatabaseType.class
+com/sully90/rest/SearchEngineService$1.class
 com/sully90/core/persistence/elastic/ElasticHelper.class
 com/sully90/core/persistence/elastic/ml/builders/ScoreScriptBuilder$ScriptOperator.class
 com/sully90/core/utils/JsonUtils.class

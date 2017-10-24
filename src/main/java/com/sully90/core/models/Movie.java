@@ -208,7 +208,7 @@ public class Movie implements WritableObject, Learnable {
     }
 
     public String getMongoId() {
-        return this._id.toString();
+        return this.mongoId;
     }
 
     public void setMongoId(String mongoId) {

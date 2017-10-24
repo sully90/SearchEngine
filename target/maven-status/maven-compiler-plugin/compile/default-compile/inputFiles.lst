@@ -20,12 +20,14 @@
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/ml/neuralnet/models/Neuron.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/models/Movie.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/persistence/elastic/ml/builders/ScoreScriptBuilder.java
+/Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/http/HttpResponse.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/persistence/mongo/util/DatabaseType.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/persistence/elastic/client/DefaultElasticSearchClient.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/persistence/elastic/utils/ElasticIndex.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/persistence/elastic/client/bulk/options/BulkProcessingOptionsBuilder.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/persistence/elastic/client/bulk/configuration/BulkProcessorConfiguration.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/utils/Duration.java
+/Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/http/HttpStatusCode.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/persistence/mongo/util/CollectionNames.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/ml/neuralnet/models/Topology.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/engine/SearchEngine.java
