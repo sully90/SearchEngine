@@ -13,7 +13,7 @@
 
     <init-param>
       <param-name>com.sun.jersey.config.property.packages</param-name>
-      <param-value>com.sully90.rest</param-value>
+      <param-value>com.sully90.server</param-value>
     </init-param>
     <init-param>
       <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
@@ -25,7 +25,7 @@
   <servlet>
     <servlet-name>jersey-servlet-search</servlet-name>
     <servlet-class>
-      com.sully90.rest.Listener
+      com.sully90.server.Listener
     </servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>

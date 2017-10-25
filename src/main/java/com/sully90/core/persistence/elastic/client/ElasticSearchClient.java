@@ -50,6 +50,10 @@ public class ElasticSearchClient<T> implements DefaultElasticSearchClient<T> {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
+    public ElasticSearchClient(final ElasticIndex indexName, final Class<T> returnClass) {
+        this(ElasticHelper.getClient(ElasticHelper.Host.LOCALHOST), indexName, returnClass);
+    }
+
     public ElasticSearchClient(final Client client, final ElasticIndex indexName, final Class<T> returnClass) {
         // Default to document indexing
         this(client, indexName, returnClass, ElasticHelper.getDefaultBulkProcessorConfiguration(), IndexType.DOCUMENT);

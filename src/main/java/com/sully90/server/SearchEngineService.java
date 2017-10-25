@@ -1,12 +1,11 @@
-package com.sully90.rest;
+package com.sully90.server;
 
-import com.sully90.core.engine.SearchEngine;
-import com.sully90.core.ml.neuralnet.Net;
-import com.sully90.core.ml.neuralnet.models.Topology;
 import com.sully90.core.models.Movie;
+import com.sully90.core.persistence.elastic.client.ElasticSearchClient;
 import com.sully90.core.persistence.elastic.ml.ScoreScript;
 import com.sully90.core.persistence.elastic.ml.builders.ScoreScriptBuilder;
 import com.sully90.core.persistence.elastic.utils.ElasticIndex;
+import com.sully90.server.models.RestResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.common.lucene.search.function.FiltersFunctionScoreQuery;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -21,9 +20,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.net.UnknownHostException;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,29 +31,22 @@ public class SearchEngineService {
 
     private static Logger LOGGER = LoggerFactory.getLogger(SearchEngineService.class);
 
-    private static SearchEngine<Movie> searchEngine;
+    private static ElasticSearchClient<Movie> searchEngine;
     private static Map<String, Double> fieldWeights;
 
     public static void init() {
-        Topology topology = new Topology(Arrays.asList(5, 50, 2, 10, 1));
-        Net myNet = new Net(topology);
-
         fieldWeights = new LinkedHashMap<String, Double>() {{
-            put("popularity", 0.5);
-            put("averageVote", 0.5);
+            put("popularity", 0.25);
+            put("averageVote", 0.75);
         }};
 
-        try {
-            searchEngine = new SearchEngine<Movie>(myNet, ElasticIndex.MOVIES, Movie.class);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+        searchEngine = new ElasticSearchClient<>(ElasticIndex.MOVIES, Movie.class);
     }
 
     @GET
     @Path("/{query}")
     @Produces({ MediaType.APPLICATION_JSON })
-    public Response searchMovies(@PathParam("query") String query) {
+    public RestResponse searchMovies(@PathParam("query") String query) {
         QueryBuilder qb = buildQuery(query, fieldWeights);
 
         if (LOGGER.isDebugEnabled()) LOGGER.debug("SearchEngineService: searchMovies: got query: " + query);
@@ -67,6 +56,8 @@ public class SearchEngineService {
 
         return ok(movies);
     }
+
+
 
     private static QueryBuilder buildQuery(String queryText, Map<String, Double> fieldWeights) {
         QueryBuilder match = QueryBuilders.multiMatchQuery(

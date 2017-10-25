@@ -1,4 +1,4 @@
-package com.sully90.rest;
+package com.sully90.server;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +17,7 @@ public class Listener extends HttpServlet
         System.out.println("---------- Servlet Initialized successfully ----------");
         System.out.println("----------");
 
-        // Initialise the SearchEngine on App launch
+        // Initialise the DeprecatedSearchEngine on App launch
         System.out.println("----------");
         System.out.println("---------- Initializing SearchEngine ----------");
         System.out.println("----------");

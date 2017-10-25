@@ -18,12 +18,13 @@ import java.util.List;
 /*
 This class brings together both the ElasticSearchClient and the coupling to our ANN
  */
-public class SearchEngine<T> extends ElasticSearchClient {
+@Deprecated
+public class DeprecatedSearchEngine<T> extends ElasticSearchClient {
 
     private StanfordNLPHelper nlpHelper;
-    private Net myNet;  // The neural net associated with this SearchEngine.
+    private Net myNet;  // The neural net associated with this DeprecatedSearchEngine.
 
-    public SearchEngine(Topology topology, ElasticIndex elasticIndex, Class<T> returnClass) throws UnknownHostException {
+    public DeprecatedSearchEngine(Topology topology, ElasticIndex elasticIndex, Class<T> returnClass) throws UnknownHostException {
         this(new Net(topology), elasticIndex, returnClass);
     }
 
@@ -39,7 +40,7 @@ public class SearchEngine<T> extends ElasticSearchClient {
         return outputs;
     }
 
-    public SearchEngine(Net myNet, ElasticIndex elasticIndex, Class<T> returnClass) throws UnknownHostException {
+    public DeprecatedSearchEngine(Net myNet, ElasticIndex elasticIndex, Class<T> returnClass) throws UnknownHostException {
         super(ElasticHelper.getClient(ElasticHelper.Host.LOCALHOST), elasticIndex, returnClass);
         this.nlpHelper = new StanfordNLPHelper();
         this.myNet = myNet;
