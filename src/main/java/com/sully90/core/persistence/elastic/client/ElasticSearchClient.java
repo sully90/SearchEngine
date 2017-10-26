@@ -34,7 +34,6 @@ import com.sully90.core.utils.JsonUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
@@ -77,11 +76,7 @@ public class ElasticSearchClient<T> implements DefaultElasticSearchClient<T> {
 
     @Override
     public void index(T entity) {
-        if (entity instanceof Collection) {
-            index(new ArrayList<T>((Collection<? extends T>) entity));
-        } else {
-            index(Arrays.asList(entity));
-        }
+        index(Arrays.asList(entity));
     }
 
     @Override

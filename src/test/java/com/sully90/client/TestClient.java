@@ -1,6 +1,5 @@
 package com.sully90.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sully90.core.models.Movie;
 import com.sully90.server.models.RestResponse;
 import com.sun.jersey.api.client.ClientResponse;
@@ -11,8 +10,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class TestClient {
-
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     public void test() {
