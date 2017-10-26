@@ -2,12 +2,12 @@ package com.sully90.core.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sully90.core.ml.neuralnet.models.Learnable;
-import org.bson.types.ObjectId;
 import com.sully90.core.persistence.mongo.WritableObject;
 import com.sully90.core.persistence.mongo.util.CollectionNames;
 import com.sully90.core.persistence.mongo.util.ObjectFinder;
 import com.sully90.core.persistence.mongo.util.ObjectWriter;
 import com.sully90.core.utils.Duration;
+import org.bson.types.ObjectId;
 
 import java.text.DateFormat;
 import java.text.ParseException;

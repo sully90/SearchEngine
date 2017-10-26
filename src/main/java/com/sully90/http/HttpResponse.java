@@ -1,10 +1,12 @@
 package com.sully90.http;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sully90.server.models.RestResponse;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 public class HttpResponse {
 
@@ -15,15 +17,15 @@ public class HttpResponse {
     }
 
     public static RestResponse ok(Object entity) {
-        return ok(Arrays.asList(entity));
+        if (entity instanceof Collection) {
+            return ok(new ArrayList<>((Collection) entity));
+        } else {
+            return ok(Arrays.asList(entity));
+        }
     }
 
-    public static RestResponse ok(Iterable<Object> entities) {
-        try {
-            return RestResponse.build().status(HttpStatusCode.OK).entity(objectMapper.writeValueAsString(entities));
-        } catch (JsonProcessingException e) {
-            return internalServerError(e);
-        }
+    public static RestResponse ok(List<Object> entities) {
+        return RestResponse.build().status(HttpStatusCode.OK).entities(entities);
     }
 
     public static RestResponse internalServerError() {

@@ -1,11 +1,12 @@
 package com.sully90.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.sully90.http.HttpStatusCode;
-import com.sully90.server.models.RestResponse;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.core.MediaType;
@@ -19,18 +20,19 @@ public class JerseyClient {
     private int port;
     private String applicationName;
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
-
     public JerseyClient(String hostName, int port, String applicationName) {
         this.hostName = hostName;
         this.port = port;
         this.applicationName = applicationName;
 
-        this.client = Client.create();
+        ClientConfig cc = new DefaultClientConfig();
+        cc.getClasses().add(JacksonJsonProvider.class);
+
+        this.client = Client.create(cc);
     }
 
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public RestResponse get(String path, ClientResponseType responseType) throws IOException {
+    public ClientResponse get(String path, ClientResponseType responseType) throws IOException {
         WebResource webResource = this.getWebResource(path);
 
         ClientResponse clientResponse = webResource.accept(responseType.getType())
@@ -40,12 +42,10 @@ public class JerseyClient {
             throw new RuntimeException("Failed: Http code: " + clientResponse.getStatus());
         }
 
-        String output = clientResponse.getEntity(String.class);
-
-        return objectMapper.readValue(output, RestResponse.class);
+        return clientResponse;
     }
 
-    public RestResponse post(String path, String input, ClientResponseType responseType) throws IOException {
+    public ClientResponse post(String path, String input, ClientResponseType responseType) throws IOException {
         WebResource webResource = this.getWebResource(path);
 
         ClientResponse clientResponse = webResource.type(responseType.getType())
@@ -55,9 +55,7 @@ public class JerseyClient {
             throw new RuntimeException("Failed: Http code: " + clientResponse.getStatus());
         }
 
-        String output = clientResponse.getEntity(String.class);
-
-        return objectMapper.readValue(output, RestResponse.class);
+        return clientResponse;
     }
 
     private WebResource getWebResource(String path) {

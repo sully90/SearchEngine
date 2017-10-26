@@ -15,6 +15,7 @@
       <param-name>com.sun.jersey.config.property.packages</param-name>
       <param-value>com.sully90.server</param-value>
     </init-param>
+
     <init-param>
       <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
       <param-value>true</param-value>

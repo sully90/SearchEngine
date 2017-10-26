@@ -14,6 +14,8 @@
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/persistence/elastic/client/ElasticSearchClient.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/persistence/elastic/query/QueryHelper.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/persistence/elastic/utils/ElasticUtils.java
+/Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/server/models/RestResponse.java
+/Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/server/models/SearchRank.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/engine/DeprecatedSearchEngine.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/ml/neuralnet/models/Layer.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/core/ml/neuralnet/models/Connection.java
