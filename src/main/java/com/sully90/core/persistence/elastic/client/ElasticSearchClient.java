@@ -137,7 +137,6 @@ public class ElasticSearchClient<T> implements DefaultElasticSearchClient<T> {
         return this.client.prepareIndex()
                 .setIndex(this.indexName.getIndexName())
                 .setType(this.indexType.getIndexType())
-//                .setSource(messageBytes)
                 .setSource(messageBytes, XContentType.JSON)
                 .request();
     }
@@ -150,8 +149,7 @@ public class ElasticSearchClient<T> implements DefaultElasticSearchClient<T> {
         return this.client.prepareIndex()
                 .setIndex(this.indexName.getIndexName())
                 .setType(this.indexType.getIndexType())
-//                .setSource(messageBytes)
-                .setSource(messageBytes, XContentType.JSON)
+                .setSource(messageBytes, xContentType)
                 .setPipeline(pipeline.getPipelineName())
                 .request();
     }
