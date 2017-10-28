@@ -268,7 +268,7 @@ public class ElasticSearchClient<T> implements DefaultElasticSearchClient<T> {
     public enum IndexType {
         DOCUMENT("document");
 
-        String indexType;
+        private String indexType;
 
         IndexType(String indexType) {
             this.indexType = indexType;
