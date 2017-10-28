@@ -2,6 +2,7 @@ package com.sully90.core.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sully90.core.ml.neuralnet.models.Learnable;
+import com.sully90.core.persistence.elastic.models.Searchable;
 import com.sully90.core.persistence.mongo.WritableObject;
 import com.sully90.core.persistence.mongo.util.CollectionNames;
 import com.sully90.core.persistence.mongo.util.ObjectFinder;
@@ -18,7 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class Movie implements WritableObject, Learnable {
+public class Movie extends Searchable implements WritableObject, Learnable {
 
     private ObjectId _id;
     private String mongoId;

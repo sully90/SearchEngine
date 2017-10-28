@@ -10,6 +10,12 @@ Made changes to work with default mappings and also support search and deseriali
 package com.sully90.core.persistence.elastic.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sully90.core.persistence.elastic.ElasticHelper;
+import com.sully90.core.persistence.elastic.client.bulk.configuration.BulkProcessorConfiguration;
+import com.sully90.core.persistence.elastic.models.Searchable;
+import com.sully90.core.persistence.elastic.query.QueryHelper;
+import com.sully90.core.persistence.elastic.utils.ElasticIndex;
+import com.sully90.core.utils.JsonUtils;
 import org.bson.types.ObjectId;
 import org.elasticsearch.action.bulk.BulkProcessor;
 import org.elasticsearch.action.delete.DeleteResponse;
@@ -17,6 +23,7 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
@@ -25,11 +32,6 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.sully90.core.persistence.elastic.ElasticHelper;
-import com.sully90.core.persistence.elastic.client.bulk.configuration.BulkProcessorConfiguration;
-import com.sully90.core.persistence.elastic.query.QueryHelper;
-import com.sully90.core.persistence.elastic.utils.ElasticIndex;
-import com.sully90.core.utils.JsonUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,28 +52,28 @@ public class ElasticSearchClient<T> implements DefaultElasticSearchClient<T> {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    public ElasticSearchClient(final ElasticIndex indexName, final Class<T> returnClass) {
+    public ElasticSearchClient(final ElasticIndex indexName, final Class<? extends Searchable> returnClass) {
         this(ElasticHelper.getClient(ElasticHelper.Host.LOCALHOST), indexName, returnClass);
     }
 
-    public ElasticSearchClient(final Client client, final ElasticIndex indexName, final Class<T> returnClass) {
+    public ElasticSearchClient(final Client client, final ElasticIndex indexName, final Class<? extends Searchable> returnClass) {
         // Default to document indexing
         this(client, indexName, returnClass, ElasticHelper.getDefaultBulkProcessorConfiguration(), IndexType.DOCUMENT);
     }
 
-    public ElasticSearchClient(final Client client, final ElasticIndex indexName, final Class<T> returnClass,
+    public ElasticSearchClient(final Client client, final ElasticIndex indexName, final Class<? extends Searchable> returnClass,
                                final BulkProcessorConfiguration bulkProcessorConfiguration) {
         // Default to document indexing
         this(client, indexName, returnClass, bulkProcessorConfiguration, IndexType.DOCUMENT);
     }
 
-    public ElasticSearchClient(final Client client, final ElasticIndex indexName, final Class<T> returnClass,
+    public ElasticSearchClient(final Client client, final ElasticIndex indexName, final Class<? extends Searchable> returnClass,
                                final BulkProcessorConfiguration bulkProcessorConfiguration, final IndexType indexType) {
         this.client = client;
         this.indexName = indexName;
         this.indexType = indexType;
         this.bulkProcessor = bulkProcessorConfiguration.build(this.client);
-        this.returnClass = returnClass;
+        this.returnClass = (Class<T>) returnClass;
     }
 
     @Override
@@ -94,6 +96,25 @@ public class ElasticSearchClient<T> implements DefaultElasticSearchClient<T> {
     }
 
     @Override
+    public void indexWithPipeline(T entity, Pipeline pipeline) {
+        indexWithPipeline(Arrays.asList(entity), pipeline);
+    }
+
+    @Override
+    public void indexWithPipeline(List<T> entities, Pipeline pipeline) {
+        indexWithPipeline(entities.stream(), pipeline);
+    }
+
+    @Override
+    public void indexWithPipeline(Stream<T> entities, Pipeline pipeline) {
+        entities
+                .map(x -> JsonUtils.convertJsonToBytes(x))
+                .filter(x -> x.isPresent())
+                .map(x -> createIndexRequest(x.get(), pipeline))
+                .forEach(bulkProcessor::add);
+    }
+
+    @Override
     public void flush() {
         this.bulkProcessor.flush();
     }
@@ -109,10 +130,29 @@ public class ElasticSearchClient<T> implements DefaultElasticSearchClient<T> {
     }
 
     private IndexRequest createIndexRequest(byte[] messageBytes) {
+        return createIndexRequest(messageBytes, XContentType.JSON);
+    }
+
+    private IndexRequest createIndexRequest(byte[] messageBytes, XContentType xContentType) {
         return this.client.prepareIndex()
                 .setIndex(this.indexName.getIndexName())
                 .setType(this.indexType.getIndexType())
-                .setSource(messageBytes)
+//                .setSource(messageBytes)
+                .setSource(messageBytes, XContentType.JSON)
+                .request();
+    }
+
+    private IndexRequest createIndexRequest(byte[] messageBytes, Pipeline pipeline) {
+        return createIndexRequest(messageBytes, pipeline, XContentType.JSON);
+    }
+
+    private IndexRequest createIndexRequest(byte[] messageBytes, Pipeline pipeline, XContentType xContentType) {
+        return this.client.prepareIndex()
+                .setIndex(this.indexName.getIndexName())
+                .setType(this.indexType.getIndexType())
+//                .setSource(messageBytes)
+                .setSource(messageBytes, XContentType.JSON)
+                .setPipeline(pipeline.getPipelineName())
                 .request();
     }
 
@@ -236,6 +276,20 @@ public class ElasticSearchClient<T> implements DefaultElasticSearchClient<T> {
 
         public String getIndexType() {
             return this.indexType;
+        }
+    }
+
+    public enum Pipeline {
+        OPENNLP("opennlp-pipeline");
+
+        private String pipelineName;
+
+        Pipeline(String pipelineName) {
+            this.pipelineName = pipelineName;
+        }
+
+        public String getPipelineName() {
+            return this.pipelineName;
         }
     }
 }

@@ -1,6 +1,7 @@
 com/sully90/core/ml/neuralnet/models/Topology.class
 com/sully90/core/persistence/elastic/ml/builders/ScriptBuilder.class
 com/sully90/core/persistence/mongo/util/FindableObject.class
+com/sully90/core/persistence/elastic/client/ElasticSearchClient$Pipeline.class
 com/sully90/core/ml/nlp/stanford/StanfordNLPHelper.class
 com/sully90/core/ml/neuralnet/Net.class
 com/sully90/http/HttpStatusCode.class
