@@ -3,9 +3,9 @@ package com.sully90.server;
 import com.sully90.elasticutils.persistence.elastic.ml.ScoreScript;
 import com.sully90.elasticutils.persistence.elastic.ml.builders.ScoreScriptBuilder;
 import com.sully90.models.Movie;
+import com.sully90.server.models.UpdateRequest;
 import com.sully90.search.client.OpenNLPElasticSearchClient;
 import com.sully90.search.util.ElasticIndex;
-import com.sully90.server.models.RestResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.common.lucene.search.function.FiltersFunctionScoreQuery;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -15,15 +15,14 @@ import org.elasticsearch.search.SearchHits;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.sully90.http.HttpResponse.created;
 import static com.sully90.http.HttpResponse.ok;
 
 @Path("/search")
@@ -46,7 +45,7 @@ public class SearchEngineService {
     @GET
     @Path("/{query}")
     @Produces({ MediaType.APPLICATION_JSON })
-    public RestResponse searchMovies(@PathParam("query") String query) {
+    public Response searchMovies(@PathParam("query") String query) {
         QueryBuilder qb = buildQuery(query, fieldWeights);
 
         if (LOGGER.isDebugEnabled()) LOGGER.debug("SearchEngineService: searchMovies: got query: " + query);
@@ -57,6 +56,14 @@ public class SearchEngineService {
         return ok(movies);
     }
 
+
+    @POST
+    @Path("/json/update/post")
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response update(UpdateRequest updateRequest) {
+        return created(updateRequest);
+    }
 
 
     private static QueryBuilder buildQuery(String queryText, Map<String, Double> fieldWeights) {

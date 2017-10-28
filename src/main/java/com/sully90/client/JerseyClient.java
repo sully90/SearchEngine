@@ -45,7 +45,7 @@ public class JerseyClient {
         return clientResponse;
     }
 
-    public ClientResponse post(String path, String input, ClientResponseType responseType) throws IOException {
+    public ClientResponse post(String path, Object input, ClientResponseType responseType) throws IOException {
         WebResource webResource = this.getWebResource(path);
 
         ClientResponse clientResponse = webResource.type(responseType.getType())

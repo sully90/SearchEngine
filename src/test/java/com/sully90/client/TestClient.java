@@ -1,7 +1,7 @@
 package com.sully90.client;
 
-import com.sully90.elasticutils.models.Movie;
-import com.sully90.server.models.RestResponse;
+import com.sully90.models.Movie;
+import com.sully90.server.models.UpdateRequest;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import org.junit.Test;
@@ -12,19 +12,36 @@ import java.util.List;
 public class TestClient {
 
     @Test
-    public void test() {
+    public void testGet() {
         JerseyClient jerseyClient = new JerseyClient("http://localhost", 8080, "SearchEngine");
 
-        String path = "search/James%20Bond";
+        String path = "search/Avatar";
 
         try {
             ClientResponse response = jerseyClient.get(path, ClientResponseType.JSON);
-            RestResponse<Movie> restResponse = response.getEntity(new GenericType<RestResponse<Movie>>() {});
+            List<Movie> movies = response.getEntity(new GenericType<List<Movie>>(){});
 
-            List<Movie> movies = restResponse.getEntities();
-
-            System.out.println("Got output. Status: " + restResponse.getStatus());
             System.out.println(movies.get(0).toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testPost() {
+        JerseyClient jerseyClient = new JerseyClient("http://localhost", 8080, "SearchEngine");
+
+        String path = "search/json/update/post";
+
+        Movie movie = Movie.finder().findOne();
+        UpdateRequest updateRequest = new UpdateRequest(movie.getObjectId().toString(), 1, 3);
+
+        try {
+            ClientResponse response = jerseyClient.post(path, updateRequest, ClientResponseType.JSON);
+
+            UpdateRequest returnedUpdateRequest = response.getEntity(new GenericType<UpdateRequest>() {});
+
+            System.out.println(returnedUpdateRequest);
         } catch (IOException e) {
             e.printStackTrace();
         }

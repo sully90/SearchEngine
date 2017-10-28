@@ -1,8 +1,8 @@
 package com.sully90.http;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sully90.server.models.RestResponse;
 
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,7 +16,7 @@ public class HttpResponse {
         objectMapper = new ObjectMapper();
     }
 
-    public static RestResponse ok(Object entity) {
+    public static Response ok(Object entity) {
         if (entity instanceof Collection) {
             return ok(new ArrayList<>((Collection) entity));
         } else {
@@ -24,16 +24,20 @@ public class HttpResponse {
         }
     }
 
-    public static RestResponse ok(List<Object> entities) {
-        return RestResponse.build().status(HttpStatusCode.OK).entities(entities);
+    public static Response ok(List<Object> entities) {
+        return Response.status(HttpStatusCode.OK.getCode()).entity(entities).build();
     }
 
-    public static RestResponse internalServerError() {
-        return RestResponse.build().status(HttpStatusCode.INTERNAL_SERVER_ERROR);
+    public static Response created(Object entity) {
+        return Response.status(HttpStatusCode.CREATED.getCode()).entity(entity).build();
     }
 
-    public static RestResponse internalServerError(Exception e) {
-        return RestResponse.build().status(HttpStatusCode.INTERNAL_SERVER_ERROR).entity(e);
+    public static Response internalServerError() {
+        return Response.status(HttpStatusCode.INTERNAL_SERVER_ERROR.getCode()).build();
+    }
+
+    public static Response internalServerError(Exception e) {
+        return Response.status(HttpStatusCode.INTERNAL_SERVER_ERROR.getCode()).entity(e).build();
     }
 
 }
