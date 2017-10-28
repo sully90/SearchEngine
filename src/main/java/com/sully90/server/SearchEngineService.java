@@ -1,10 +1,10 @@
 package com.sully90.server;
 
-import com.sully90.elasticutils.persistence.elastic.client.ElasticSearchClient;
 import com.sully90.elasticutils.persistence.elastic.ml.ScoreScript;
 import com.sully90.elasticutils.persistence.elastic.ml.builders.ScoreScriptBuilder;
-import com.sully90.elasticutils.persistence.elastic.utils.ElasticIndex;
 import com.sully90.models.Movie;
+import com.sully90.search.client.OpenNLPElasticSearchClient;
+import com.sully90.search.util.ElasticIndex;
 import com.sully90.server.models.RestResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.common.lucene.search.function.FiltersFunctionScoreQuery;
@@ -31,7 +31,7 @@ public class SearchEngineService {
 
     private static Logger LOGGER = LoggerFactory.getLogger(SearchEngineService.class);
 
-    private static ElasticSearchClient<Movie> searchEngine;
+    private static OpenNLPElasticSearchClient<Movie> searchEngine;
     private static Map<String, Double> fieldWeights;
 
     public static void init() {
@@ -40,7 +40,7 @@ public class SearchEngineService {
             put("averageVote", 0.75);
         }};
 
-        searchEngine = new ElasticSearchClient<>(ElasticIndex.MOVIES, Movie.class);
+        searchEngine = new OpenNLPElasticSearchClient<Movie>(ElasticIndex.MOVIES, Movie.class);
     }
 
     @GET

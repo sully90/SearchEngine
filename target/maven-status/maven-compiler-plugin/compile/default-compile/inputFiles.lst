@@ -2,6 +2,7 @@
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/server/SearchEngineService.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/http/HttpStatusCode.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/client/JerseyClient.java
+/Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/models/Movie.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/server/models/RestResponse.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/server/models/SearchRank.java
 /Users/davidsullivan/IdeaProjects/SearchEngine/src/main/java/com/sully90/client/HttpMethod.java
