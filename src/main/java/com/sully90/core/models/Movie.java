@@ -44,6 +44,7 @@ public class Movie extends Searchable implements WritableObject, Learnable {
     }
 
     public Movie(String title, String movieId) {
+        super();
         this.title = title;
         this.movieId = movieId;
     }
