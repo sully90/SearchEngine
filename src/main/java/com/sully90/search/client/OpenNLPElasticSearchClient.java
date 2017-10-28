@@ -4,6 +4,7 @@ import com.sully90.elasticutils.persistence.elastic.client.ElasticSearchClient;
 import com.sully90.models.search.Pipeline;
 import com.sully90.models.search.Searchable;
 import com.sully90.search.util.ElasticIndex;
+import org.elasticsearch.client.Client;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -14,6 +15,10 @@ public class OpenNLPElasticSearchClient<T> extends ElasticSearchClient<T> {
 
     public OpenNLPElasticSearchClient(ElasticIndex indexName, Class<? extends Searchable> returnClass) {
         super(indexName.getIndexName(), (Class<T>) returnClass);
+    }
+
+    public OpenNLPElasticSearchClient(final Client client, ElasticIndex indexName, Class<? extends Searchable> returnClass) {
+        super(client, indexName.getIndexName(), (Class<T>) returnClass);
     }
 
     @Override
