@@ -1,10 +1,10 @@
 package com.sully90.server;
 
-import com.sully90.core.models.Movie;
-import com.sully90.core.persistence.elastic.client.ElasticSearchClient;
-import com.sully90.core.persistence.elastic.ml.ScoreScript;
-import com.sully90.core.persistence.elastic.ml.builders.ScoreScriptBuilder;
-import com.sully90.core.persistence.elastic.utils.ElasticIndex;
+import com.sully90.elasticutils.models.Movie;
+import com.sully90.elasticutils.persistence.elastic.client.ElasticSearchClient;
+import com.sully90.elasticutils.persistence.elastic.ml.ScoreScript;
+import com.sully90.elasticutils.persistence.elastic.ml.builders.ScoreScriptBuilder;
+import com.sully90.elasticutils.persistence.elastic.utils.ElasticIndex;
 import com.sully90.server.models.RestResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.common.lucene.search.function.FiltersFunctionScoreQuery;

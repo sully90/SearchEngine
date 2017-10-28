@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="com.sully90.elasticutils">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../elasticutils/out/artifacts/Search_jar/com.sully90.elasticutils.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

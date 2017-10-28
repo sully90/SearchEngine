@@ -1,6 +1,6 @@
 package com.sully90.client;
 
-import com.sully90.core.models.Movie;
+import com.sully90.elasticutils.models.Movie;
 import com.sully90.server.models.RestResponse;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
