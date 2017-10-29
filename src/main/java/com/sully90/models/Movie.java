@@ -3,11 +3,11 @@ package com.sully90.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sully90.elasticutils.ml.neuralnet.models.Learnable;
-import com.sully90.elasticutils.persistence.mongo.util.CollectionNames;
 import com.sully90.elasticutils.persistence.mongo.util.ObjectFinder;
 import com.sully90.elasticutils.persistence.mongo.util.ObjectWriter;
 import com.sully90.elasticutils.utils.Duration;
 import com.sully90.models.search.Searchable;
+import com.sully90.persistence.mongo.util.CollectionNames;
 import org.bson.types.ObjectId;
 
 import java.text.DateFormat;

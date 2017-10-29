@@ -3,7 +3,7 @@ package com.sully90.search.client;
 import com.sully90.elasticutils.persistence.elastic.client.ElasticSearchClient;
 import com.sully90.models.search.Pipeline;
 import com.sully90.models.search.Searchable;
-import com.sully90.search.util.ElasticIndex;
+import com.sully90.persistence.elastic.util.ElasticIndex;
 import org.elasticsearch.client.Client;
 
 import java.util.List;
@@ -14,11 +14,11 @@ public class OpenNLPElasticSearchClient<T> extends ElasticSearchClient<T> {
     private Pipeline pipeline;
 
     public OpenNLPElasticSearchClient(ElasticIndex indexName, Class<? extends Searchable> returnClass) {
-        super(indexName.getIndexName(), (Class<T>) returnClass);
+        super(indexName, (Class<T>) returnClass);
     }
 
     public OpenNLPElasticSearchClient(final Client client, ElasticIndex indexName, Class<? extends Searchable> returnClass) {
-        super(client, indexName.getIndexName(), (Class<T>) returnClass);
+        super(client, indexName, (Class<T>) returnClass);
     }
 
     @Override
