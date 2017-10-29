@@ -8,6 +8,7 @@ import org.junit.Assert;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -43,18 +44,19 @@ public class JerseyClient {
         return response;
     }
 
-//    public ClientResponse post(String path, Object input, ClientResponseType responseType) throws IOException {
-//        WebTarget webResource = this.getWebResource(path);
-//
-//        ClientResponse clientResponse = webResource.type(responseType.getType())
-//                .post(ClientResponse.class, input);
-//
-//        if (clientResponse.getStatus() != HttpStatusCode.CREATED.getCode()) {
-//            throw new RuntimeException("Failed: Http code: " + clientResponse.getStatus());
-//        }
-//
-//        return clientResponse;
-//    }
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response post(String path, Object input, ClientResponseType responseType) throws IOException {
+        WebTarget webTarget = this.getWebResource(path);
+
+        Builder request = webTarget.request();
+        request.header("Content-type", MediaType.APPLICATION_JSON);
+
+        Response response = request.post(Entity.entity(input, MediaType.APPLICATION_JSON));
+
+        Assert.assertTrue(response.getStatus() == HttpStatusCode.CREATED.getCode());
+
+        return response;
+    }
 
     private WebTarget getWebResource(String path) {
         return client.target(this.getURL(path));
