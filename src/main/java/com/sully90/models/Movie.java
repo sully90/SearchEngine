@@ -3,7 +3,6 @@ package com.sully90.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sully90.elasticutils.ml.neuralnet.models.Learnable;
-import com.sully90.elasticutils.persistence.mongo.WritableObject;
 import com.sully90.elasticutils.persistence.mongo.util.CollectionNames;
 import com.sully90.elasticutils.persistence.mongo.util.ObjectFinder;
 import com.sully90.elasticutils.persistence.mongo.util.ObjectWriter;
@@ -20,10 +19,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class Movie extends Searchable implements WritableObject, Learnable {
+public class Movie extends Searchable implements Learnable {
 
     private ObjectId _id;
-    private String mongoId;
 
     // IMDb fields
     private long budget;
@@ -208,14 +206,6 @@ public class Movie extends Searchable implements WritableObject, Learnable {
     @JsonIgnore
     public ObjectId getObjectId() {
         return this._id;
-    }
-
-    public String getMongoId() {
-        return this.mongoId;
-    }
-
-    public void setMongoId(String mongoId) {
-        this.mongoId = mongoId;
     }
 
     public static ObjectFinder<Movie> finder() {

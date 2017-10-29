@@ -3,9 +3,9 @@ package com.sully90.server;
 import com.sully90.elasticutils.persistence.elastic.ml.ScoreScript;
 import com.sully90.elasticutils.persistence.elastic.ml.builders.ScoreScriptBuilder;
 import com.sully90.models.Movie;
-import com.sully90.server.models.UpdateRequest;
 import com.sully90.search.client.OpenNLPElasticSearchClient;
 import com.sully90.search.util.ElasticIndex;
+import com.sully90.server.models.UpdateRequest;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.common.lucene.search.function.FiltersFunctionScoreQuery;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -33,13 +33,17 @@ public class SearchEngineService {
     private static OpenNLPElasticSearchClient<Movie> searchEngine;
     private static Map<String, Double> fieldWeights;
 
+    static {
+        init();
+    }
+
     public static void init() {
         fieldWeights = new LinkedHashMap<String, Double>() {{
             put("popularity", 0.25);
             put("averageVote", 0.75);
         }};
 
-        searchEngine = new OpenNLPElasticSearchClient<Movie>(ElasticIndex.MOVIES, Movie.class);
+        searchEngine = new OpenNLPElasticSearchClient<>(ElasticIndex.MOVIES, Movie.class);
     }
 
     @GET

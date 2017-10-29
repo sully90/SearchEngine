@@ -21,7 +21,7 @@ public class Listener extends HttpServlet
         System.out.println("----------");
         System.out.println("---------- Initializing SearchEngine ----------");
         System.out.println("----------");
-        SearchEngineService.init();
+//        SearchEngineService.init();
 
         System.out.println("----------");
         System.out.println("---------- Done! ----------");
