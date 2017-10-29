@@ -1,8 +1,8 @@
 package com.sully90.server;
 
 import com.sully90.models.Movie;
+import com.sully90.persistence.elastic.util.ElasticIndex;
 import com.sully90.search.client.OpenNLPElasticSearchClient;
-import com.sully90.search.util.ElasticIndex;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,13 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c717be6c-acb0-4fca-a264-1aa114dded3a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/persistence/elastic/util/ElasticIndex.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/persistence/mongo/util/CollectionNames.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sully90/search/util/ElasticIndex.java" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jackson_jackson_core_asl_1_9_13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jackson_jackson_jaxrs_1_9_13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jackson_jackson_mapper_asl_1_9_13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jackson_jackson_xc_1_9_13.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jersey_media_jersey_media_json_jackson_2_7.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sully90/models/Movie.java" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/models/Movie.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sully90/search/client/OpenNLPElasticSearchClient.java" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/search/client/OpenNLPElasticSearchClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SearchEngine.iml" afterPath="$PROJECT_DIR$/SearchEngine.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sully90/client/JerseyClient.java" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/client/JerseyClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sully90/server/Update.java" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/server/Update.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/sully90/client/TestClient.java" afterPath="$PROJECT_DIR$/src/test/java/com/sully90/client/TestClient.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,7 +27,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SearchEngineService.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SearchEngineService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-581">
@@ -36,10 +40,10 @@
       <file leaf-file-name="Update.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/server/Update.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+            <state relative-caret-position="60">
+              <caret line="4" column="60" lean-forward="false" selection-start-line="4" selection-start-column="60" selection-end-line="4" selection-end-column="60" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#553#560#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -67,41 +71,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ElasticIndex.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/persistence/elastic/util/ElasticIndex.java">
+      <file leaf-file-name="TestClient.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/sully90/client/TestClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="29" lean-forward="false" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
+            <state relative-caret-position="300">
+              <caret line="20" column="47" lean-forward="true" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
               <folding>
-                <element signature="e#270#271#0" expanded="true" />
-                <element signature="e#312#313#0" expanded="true" />
-                <element signature="e#362#363#0" expanded="true" />
-                <element signature="e#399#400#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CollectionNames.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/persistence/mongo/util/CollectionNames.java">
+      <file leaf-file-name="JerseyClient.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/client/JerseyClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="24" lean-forward="false" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
-              <folding>
-                <element signature="e#267#268#0" expanded="true" />
-                <element signature="e#299#300#0" expanded="true" />
-                <element signature="e#344#345#0" expanded="true" />
-                <element signature="e#376#377#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Searchable.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/models/search/Searchable.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="23" column="32" lean-forward="false" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
+            <state relative-caret-position="272">
+              <caret line="27" column="47" lean-forward="false" selection-start-line="27" selection-start-column="47" selection-end-line="27" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -112,8 +98,8 @@
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="72" column="52" lean-forward="false" selection-start-line="72" selection-start-column="21" selection-end-line="72" selection-end-column="52" />
+            <state relative-caret-position="534">
+              <caret line="86" column="16" lean-forward="false" selection-start-line="86" selection-start-column="16" selection-end-line="86" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -191,20 +177,20 @@
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/search/util/ElasticIndex.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/models/search/UpdateRequest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/server/models/RestResponse.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sully90/client/JerseyClient.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/http/HttpResponse.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/sully90/client/TestClient.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/server/models/UpdateRequest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/server/Listener.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/models/search/Searchable.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sully90/server/Update.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/persistence/elastic/util/ElasticIndex.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/persistence/mongo/util/CollectionNames.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/models/Movie.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/search/client/OpenNLPElasticSearchClient.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/test/java/com/sully90/client/TestClient.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sully90/server/Update.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sully90/client/JerseyClient.java" />
       </list>
     </option>
   </component>
@@ -278,6 +264,15 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="sully90" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SearchEngine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SearchEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="sully90" type="462c0819:PsiDirectoryNode" />
               <item name="persistence" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -329,6 +324,23 @@
             </path>
             <path>
               <item name="SearchEngine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SearchEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="sully90" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SearchEngine" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SearchEngine" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="sully90" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SearchEngine" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
@@ -365,7 +377,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Update">
+  <component name="RunManager" selected="JUnit.TestClient.testGet">
     <configuration name="JerseyClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -569,9 +581,9 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.Update" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.TestClient.testPost" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.TestClient.testGet" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.TestClient.testGet" />
+        <item index="1" class="java.lang.String" itemvalue="Application.Update" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.TestClient.testPost" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.TestClient.test" />
         <item index="4" class="java.lang.String" itemvalue="Application.JerseyClient" />
       </list>
@@ -599,14 +611,14 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="TestClient_testGet - 2017.10.29 at 00h 36m 03s.xml">
+    <history-entry file="TestClient_testGet - 2017.10.29 at 15h 53m 28s.xml">
       <configuration name="TestClient.testGet" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestClient_testGet - 2017.10.29 at 00h 36m 14s.xml">
+    <history-entry file="TestClient_testGet - 2017.10.29 at 15h 54m 15s.xml">
       <configuration name="TestClient.testGet" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="TestClient_testPost - 2017.10.29 at 00h 23m 15s.xml">
-      <configuration name="TestClient.testPost" configurationId="JUnit" />
+    <history-entry file="TestClient_testGet - 2017.10.29 at 15h 55m 41s.xml">
+      <configuration name="TestClient.testGet" configurationId="JUnit" />
     </history-entry>
     <history-entry file="TestClient_testPost - 2017.10.29 at 00h 24m 55s.xml">
       <configuration name="TestClient.testPost" configurationId="JUnit" />
@@ -642,7 +654,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958803" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32958803" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -711,6 +723,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-344">
           <caret line="12" column="12" lean-forward="false" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#3818#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -746,6 +761,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="12" column="29" lean-forward="false" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
+          <folding>
+            <element signature="e#246#247#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -753,20 +771,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="15" lean-forward="false" selection-start-line="6" selection-start-column="15" selection-end-line="6" selection-end-column="15" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/server/models/RestResponse.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/client/JerseyClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="51" column="51" lean-forward="false" selection-start-line="51" selection-start-column="51" selection-end-line="51" selection-end-column="51" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/http/HttpResponse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -792,34 +801,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/sully90/client/TestClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="41" column="49" lean-forward="false" selection-start-line="41" selection-start-column="49" selection-end-line="41" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/server/Update.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="72" column="52" lean-forward="false" selection-start-line="72" selection-start-column="21" selection-end-line="72" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -828,25 +809,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/models/search/Searchable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="23" column="32" lean-forward="false" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/persistence/elastic/util/ElasticIndex.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="16" column="29" lean-forward="false" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
           <folding>
-            <element signature="e#270#271#0" expanded="true" />
-            <element signature="e#312#313#0" expanded="true" />
-            <element signature="e#362#363#0" expanded="true" />
-            <element signature="e#399#400#0" expanded="true" />
+            <element signature="e#270#271#0" expanded="false" />
+            <element signature="e#312#313#0" expanded="false" />
+            <element signature="e#362#363#0" expanded="false" />
+            <element signature="e#399#400#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -856,10 +827,10 @@
         <state relative-caret-position="225">
           <caret line="15" column="24" lean-forward="false" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
           <folding>
-            <element signature="e#267#268#0" expanded="true" />
-            <element signature="e#299#300#0" expanded="true" />
-            <element signature="e#344#345#0" expanded="true" />
-            <element signature="e#376#377#0" expanded="true" />
+            <element signature="e#267#268#0" expanded="false" />
+            <element signature="e#299#300#0" expanded="false" />
+            <element signature="e#344#345#0" expanded="false" />
+            <element signature="e#376#377#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -874,6 +845,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-581">
+          <caret line="6" column="60" lean-forward="false" selection-start-line="6" selection-start-column="60" selection-end-line="6" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/models/search/Searchable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="23" column="32" lean-forward="false" selection-start-line="23" selection-start-column="32" selection-end-line="23" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/search/client/OpenNLPElasticSearchClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -882,11 +871,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-581">
-          <caret line="6" column="60" lean-forward="false" selection-start-line="6" selection-start-column="60" selection-end-line="6" selection-end-column="60" />
+        <state relative-caret-position="534">
+          <caret line="86" column="16" lean-forward="false" selection-start-line="86" selection-start-column="16" selection-end-line="86" selection-end-column="16" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/server/Update.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="60" lean-forward="false" selection-start-line="4" selection-start-column="60" selection-end-line="4" selection-end-column="60" />
+          <folding>
+            <element signature="e#553#560#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/client/JerseyClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="27" column="47" lean-forward="false" selection-start-line="27" selection-start-column="47" selection-end-line="27" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/sully90/client/TestClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="47" lean-forward="true" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

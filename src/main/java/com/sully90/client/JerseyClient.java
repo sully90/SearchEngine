@@ -2,14 +2,16 @@ package com.sully90.client;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.sully90.http.HttpStatusCode;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
+import org.glassfish.jersey.client.ClientConfig;
+import org.junit.Assert;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Invocation.Builder;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 
 public class JerseyClient {
@@ -25,41 +27,37 @@ public class JerseyClient {
         this.port = port;
         this.applicationName = applicationName;
 
-        ClientConfig cc = new DefaultClientConfig();
-        cc.getClasses().add(JacksonJsonProvider.class);
-
-        this.client = Client.create(cc);
+        this.client = ClientBuilder.newClient(new ClientConfig().register(JacksonJsonProvider.class));
     }
 
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public ClientResponse get(String path, ClientResponseType responseType) throws IOException {
-        WebResource webResource = this.getWebResource(path);
+    public Response get(String path, ClientResponseType responseType) throws IOException {
+        WebTarget webTarget = this.getWebResource(path);
 
-        ClientResponse clientResponse = webResource.accept(responseType.getType())
-                .get(ClientResponse.class);
+        Builder request = webTarget.request();
+        request.header("Content-type", MediaType.APPLICATION_JSON);
 
-        if (clientResponse.getStatus() != HttpStatusCode.OK.getCode()) {
-            throw new RuntimeException("Failed: Http code: " + clientResponse.getStatus());
-        }
+        Response response = request.get();
+        Assert.assertTrue(response.getStatus() == HttpStatusCode.OK.getCode());
 
-        return clientResponse;
+        return response;
     }
 
-    public ClientResponse post(String path, Object input, ClientResponseType responseType) throws IOException {
-        WebResource webResource = this.getWebResource(path);
+//    public ClientResponse post(String path, Object input, ClientResponseType responseType) throws IOException {
+//        WebTarget webResource = this.getWebResource(path);
+//
+//        ClientResponse clientResponse = webResource.type(responseType.getType())
+//                .post(ClientResponse.class, input);
+//
+//        if (clientResponse.getStatus() != HttpStatusCode.CREATED.getCode()) {
+//            throw new RuntimeException("Failed: Http code: " + clientResponse.getStatus());
+//        }
+//
+//        return clientResponse;
+//    }
 
-        ClientResponse clientResponse = webResource.type(responseType.getType())
-                .post(ClientResponse.class, input);
-
-        if (clientResponse.getStatus() != HttpStatusCode.CREATED.getCode()) {
-            throw new RuntimeException("Failed: Http code: " + clientResponse.getStatus());
-        }
-
-        return clientResponse;
-    }
-
-    private WebResource getWebResource(String path) {
-        return client.resource(this.getURL(path));
+    private WebTarget getWebResource(String path) {
+        return client.target(this.getURL(path));
 
     }
 

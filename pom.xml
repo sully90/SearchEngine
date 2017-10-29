@@ -75,6 +75,26 @@
             <version>2.7</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client -->
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>2.7</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>org.codehaus.jackson</artifactId>
+                    <groupId>jackson-mapper-asl</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>2.7</version>
+        </dependency>
+
+
         <!--<dependency>-->
             <!--<groupId>com.sun.jersey</groupId>-->
             <!--<artifactId>jersey-json</artifactId>-->
