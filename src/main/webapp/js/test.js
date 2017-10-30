@@ -17,6 +17,10 @@ document.getElementById("searchButton").onclick = function() {
     input = document.getElementById("searchBox");
     console.log(input.value);
 
+    if (document.contains(document.getElementById("movieList"))) {
+            document.getElementById("movieList").remove();
+    }
+
     $.getJSON( "/SearchEngine/search/json/" + input.value, function( data ) {
       console.log(data);
       var items = [];
@@ -27,6 +31,7 @@ document.getElementById("searchButton").onclick = function() {
      
       $( "<ul/>", {
         "class": "myList",
+        "id": "movieList",
         html: items.join( "" )
       }).appendTo( "body" );
     });
