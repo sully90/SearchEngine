@@ -15,9 +15,9 @@
         </style>
         <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-        <title>REST Bookstore Sample</title>
+        <title>Search</title>
     </head>
-<form class="form-wrapper cf">
+<form onsubmit="return false" class="form-wrapper cf">
   	<input id="searchBox" type="text" placeholder="Search here..." required>
 	  <button id="searchButton" type="button">Search</button>
 </form>
