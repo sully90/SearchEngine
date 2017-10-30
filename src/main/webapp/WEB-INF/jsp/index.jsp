@@ -18,8 +18,8 @@
         <title>REST Bookstore Sample</title>
     </head>
 <form class="form-wrapper cf">
-  	<input id="searchBox" type="text" onkeyup="myFunction()" placeholder="Search here..." required>
-	  <!--<button id="searchButton" type="submit">Search</button>-->
+  	<input id="searchBox" type="text" placeholder="Search here..." required>
+	  <button id="searchButton" type="button">Search</button>
 </form>
         <script type="text/javascript"><c:import url="/js/test.js" /></script>
 </html>

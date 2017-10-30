@@ -5,7 +5,7 @@
 //   console.log(input.value);
 // }
 
-document.getElementById("searchBox").onkeyup = function() {
+document.getElementById("searchButton").onclick = function() {
     input = document.getElementById("searchBox");
     console.log(input.value);
 }
