@@ -5,42 +5,22 @@
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
   <display-name>Restful Web Application</display-name>
 
-  <servlet>
-    <servlet-name>jersey-serlvet</servlet-name>
-    <servlet-class>
-      <!--com.sun.jersey.spi.container.servlet.ServletContainer-->
-      org.glassfish.jersey.servlet.ServletContainer
-    </servlet-class>
-
+  <filter>
+    <filter-name>com.sully90.App</filter-name>
+    <filter-class>org.glassfish.jersey.servlet.ServletContainer</filter-class>
     <init-param>
-      <param-name>jersey.config.server.provider.packages</param-name>
-      <param-value>com.sully90.server</param-value>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>com.sully90.App</param-value>
     </init-param>
-
+    <!-- pass to next filter if Jersey/App returns 404 -->
     <init-param>
-      <param-name>jersey.config.server.provider.classnames</param-name>
-      <param-value>org.glassfish.jersey.jackson.JacksonFeature</param-value>
+      <param-name>jersey.config.servlet.filter.forwardOn404</param-name>
+      <param-value>true</param-value>
     </init-param>
-
-
-    <!--<init-param>-->
-      <!--<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>-->
-      <!--<param-value>true</param-value>-->
-    <!--</init-param>-->
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-
-  <!--<servlet>-->
-    <!--<servlet-name>jersey-servlet-search</servlet-name>-->
-    <!--<servlet-class>-->
-      <!--com.sully90.server.Listener-->
-    <!--</servlet-class>-->
-    <!--<load-on-startup>1</load-on-startup>-->
-  <!--</servlet>-->
-
-  <servlet-mapping>
-    <servlet-name>jersey-serlvet</servlet-name>
-    <url-pattern>/rest/*</url-pattern>
-  </servlet-mapping>
+  </filter>
+  <filter-mapping>
+    <filter-name>com.sully90.App</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 
 </web-app>

@@ -16,11 +16,10 @@ import org.glassfish.jersey.server.mvc.Viewable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.ServletContext;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,9 +29,6 @@ import static com.sully90.http.HttpResponse.ok;
 
 @Path("/search")
 public class SearchEngineService {
-
-    @Context
-    ServletContext servletContext;
 
     private static Logger LOGGER = LoggerFactory.getLogger(SearchEngineService.class);
 
@@ -53,10 +49,13 @@ public class SearchEngineService {
     }
 
     @GET
-    @Path("/")
+    @Path("/index")
     @Produces({ MediaType.TEXT_HTML })
-    public Response index() {
-        return Response.ok((new Viewable("/index.jsp", null))).build();
+    public Viewable index() {
+        Map<String, String> model = new HashMap<>();
+        model.put("hello", "Hello");
+        model.put("world", "World");
+        return new Viewable("/index", model);
     }
 
     @GET

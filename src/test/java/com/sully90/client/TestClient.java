@@ -15,7 +15,7 @@ public class TestClient {
     public void testGet() {
         JerseyClient jerseyClient = new JerseyClient("http://localhost", 8080, "SearchEngine");
 
-        String path = "search/Avatar";
+        String path = "search/json/Avatar";
 
         try {
             Response response = jerseyClient.get(path, ClientResponseType.JSON);

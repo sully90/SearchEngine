@@ -3,7 +3,6 @@ package com.sully90.client;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.sully90.http.HttpStatusCode;
 import org.glassfish.jersey.client.ClientConfig;
-import org.junit.Assert;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.client.Client;
@@ -39,7 +38,9 @@ public class JerseyClient {
         request.header("Content-type", MediaType.APPLICATION_JSON);
 
         Response response = request.get();
-        Assert.assertTrue(response.getStatus() == HttpStatusCode.OK.getCode());
+        if (response.getStatus() != HttpStatusCode.OK.getCode()) {
+            throw new RuntimeException("JerseyClient: Got non 200 status code: " + response.getStatus());
+        }
 
         return response;
     }
@@ -53,7 +54,9 @@ public class JerseyClient {
 
         Response response = request.post(Entity.entity(input, MediaType.APPLICATION_JSON));
 
-        Assert.assertTrue(response.getStatus() == HttpStatusCode.CREATED.getCode());
+        if (response.getStatus() != HttpStatusCode.CREATED.getCode()) {
+            throw new RuntimeException("JerseyClient: Got non 201 status code: " + response.getStatus());
+        }
 
         return response;
     }
@@ -67,7 +70,8 @@ public class JerseyClient {
         StringBuilder builder = new StringBuilder(this.hostName + ":" + this.port + "/");
         builder
                 .append(this.applicationName)
-                .append("/rest/")
+//                .append("/rest/")
+                .append("/")
                 .append(path);
         String url = builder.toString();
         System.out.println(url);

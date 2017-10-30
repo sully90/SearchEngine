@@ -1,3 +1,3 @@
 #/bin/bash
 
-mvn tomcat:run
+mvn tomcat7:run
