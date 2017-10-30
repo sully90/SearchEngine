@@ -12,10 +12,13 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.functionscore.ScriptScoreFunctionBuilder;
 import org.elasticsearch.search.SearchHits;
+import org.glassfish.jersey.server.mvc.Viewable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.ServletContext;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.LinkedHashMap;
@@ -27,6 +30,9 @@ import static com.sully90.http.HttpResponse.ok;
 
 @Path("/search")
 public class SearchEngineService {
+
+    @Context
+    ServletContext servletContext;
 
     private static Logger LOGGER = LoggerFactory.getLogger(SearchEngineService.class);
 
@@ -47,7 +53,14 @@ public class SearchEngineService {
     }
 
     @GET
-    @Path("/{query}")
+    @Path("/")
+    @Produces({ MediaType.TEXT_HTML })
+    public Response index() {
+        return Response.ok((new Viewable("/index.jsp", null))).build();
+    }
+
+    @GET
+    @Path("json/{query}")
     @Produces({ MediaType.APPLICATION_JSON })
     public Response searchMovies(@PathParam("query") String query) {
         QueryBuilder qb = buildQuery(query, fieldWeights);
