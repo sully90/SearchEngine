@@ -221,6 +221,13 @@
             <version>3.5.2</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.opennlp</groupId>
+            <artifactId>opennlp-tools</artifactId>
+            <version>1.8.2</version>
+        </dependency>
+
+        <!-- JUNIT -->
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>

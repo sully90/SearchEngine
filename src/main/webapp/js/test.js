@@ -36,5 +36,6 @@ document.getElementById("searchButton").onclick = function() {
       }).appendTo( "body" );
     });
 
-    $("#searchBox").val("");
+    // Clear the searchbox
+    // $("#searchBox").val("");
 }
