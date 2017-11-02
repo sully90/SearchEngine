@@ -13,8 +13,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -59,10 +59,27 @@ public class OpenNLPService {
         return Sets.newHashSet(names);
     }
 
-    private TokenNameFinderModel getTokenNameFinderModel(String fileName) {
-        URL url = ClassLoader.getSystemResource(fileName);
+    public Map<String, Set<String>> getNamedEntities(String content, String[] models) {
+        Map<String, Set<String>> namedEntities = new HashMap<>();
 
-        try(InputStream is = new FileInputStream(url.getFile())) {
+        for (String model : models) {
+            if (nameFinderModels.containsKey(model)) {
+                namedEntities.put(model, this.find(content, model));
+            } else {
+                throw new RuntimeException(String.format("Could not find field [%s], possible values %s", model, nameFinderModels.keySet()));
+            }
+        }
+
+        return namedEntities;
+    }
+
+    private TokenNameFinderModel getTokenNameFinderModel(String fileName) {
+//        URL url = ClassLoader.getSystemResource(fileName);
+        String fileNameWithPath = "src/main/resources/models/" + fileName;
+        System.out.println(fileNameWithPath);
+
+//        try(InputStream is = new FileInputStream(url.getFile())) {
+        try(InputStream is = new FileInputStream(fileNameWithPath)) {
             TokenNameFinderModel nameFinderModel = new TokenNameFinderModel(is);
             return nameFinderModel;
         } catch (FileNotFoundException e) {

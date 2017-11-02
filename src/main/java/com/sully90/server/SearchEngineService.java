@@ -3,11 +3,13 @@ package com.sully90.server;
 import com.sully90.elasticutils.persistence.elastic.ml.ScoreScript;
 import com.sully90.elasticutils.persistence.elastic.ml.builders.ScoreScriptBuilder;
 import com.sully90.models.Movie;
+import com.sully90.nlp.opennlp.OpenNLPService;
 import com.sully90.persistence.elastic.util.ElasticIndex;
 import com.sully90.search.client.OpenNLPElasticSearchClient;
 import com.sully90.server.models.UpdateRequest;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.common.lucene.search.function.FiltersFunctionScoreQuery;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.functionscore.ScriptScoreFunctionBuilder;
@@ -19,10 +21,7 @@ import org.slf4j.LoggerFactory;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.sully90.http.HttpResponse.created;
 import static com.sully90.http.HttpResponse.ok;
@@ -35,6 +34,9 @@ public class SearchEngineService {
     private static OpenNLPElasticSearchClient<Movie> searchEngine;
     private static Map<String, Double> fieldWeights;
 
+    private static OpenNLPService openNLPService;
+    private static String[] nlpModels;
+
     static {
         init();
     }
@@ -46,6 +48,12 @@ public class SearchEngineService {
         }};
 
         searchEngine = new OpenNLPElasticSearchClient<>(ElasticIndex.MOVIES, Movie.class);
+        openNLPService = new OpenNLPService();
+        nlpModels = new String[] {
+                "persons",
+                "dates",
+                "locations"
+        };
     }
 
     @GET
@@ -62,7 +70,16 @@ public class SearchEngineService {
     @Path("json/{query}")
     @Produces({ MediaType.APPLICATION_JSON })
     public Response searchMovies(@PathParam("query") String query) {
-        QueryBuilder qb = buildQuery(query, fieldWeights);
+        Map<String, Set<String>> namedEntities = openNLPService.getNamedEntities(query, nlpModels);
+
+        System.out.println(namedEntities);
+
+//        QueryBuilder qb = buildQuery(query, fieldWeights);
+        QueryBuilder qb = getQueryBuilder(query, namedEntities);
+
+        for (String key : namedEntities.keySet()) {
+
+        }
 
         if (LOGGER.isDebugEnabled()) LOGGER.debug("SearchEngineService: searchMovies: got query: " + query);
 
@@ -82,6 +99,30 @@ public class SearchEngineService {
     }
 
 
+    private static QueryBuilder getQueryBuilder(String queryText, Map<String, Set<String>> namedEntities) {
+        QueryBuilder match = QueryBuilders.multiMatchQuery(
+                queryText, "title", "overview"
+        );
+        BoolQueryBuilder qb = QueryBuilders.boolQuery().should(match);
+
+        for (String key : namedEntities.keySet()) {
+            Set<String> values = namedEntities.get(key);
+            Iterator<String> itValues = values.iterator();
+            while(itValues.hasNext()) {
+                String value = itValues.next();
+
+                // Query against entities.X field and boost
+                QueryBuilder termQuery = QueryBuilders.termQuery("entities." + key, value).boost(2.0f);
+                qb.should(termQuery);
+            }
+        }
+
+        System.out.println(qb.toString());
+        return qb;
+    }
+
+
+    @Deprecated
     private static QueryBuilder buildQuery(String queryText, Map<String, Double> fieldWeights) {
         QueryBuilder match = QueryBuilders.multiMatchQuery(
                 queryText, "title", "overview", "tagLine"
