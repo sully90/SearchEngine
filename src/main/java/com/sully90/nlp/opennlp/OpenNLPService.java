@@ -21,6 +21,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class OpenNLPService {
 
+    private static final String CONFIGURATION_KEY = "opennlp.entities.model.";
+    private static final String MODEL_DIR = "src/main/resources/models/";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenNLPService.class);
 
     // TokenNameFinder is not thread safe, so use a threadLocal hack
@@ -33,8 +36,8 @@ public class OpenNLPService {
             String key = (String) e.nextElement();
             String filename = Configuration.config().getProperty(key);
             // now you have name and value
-            if (key.startsWith("opennlp.entities.models")) {
-                String modelName = key.replace("opennlp.entities.models.", "");
+            if (key.startsWith(CONFIGURATION_KEY)) {
+                String modelName = key.replace(CONFIGURATION_KEY, "");
                 TokenNameFinderModel nameFinderModel = getTokenNameFinderModel(filename);
 
                 if (nameFinderModel != null) this.nameFinderModels.put(modelName, nameFinderModel);
@@ -59,6 +62,12 @@ public class OpenNLPService {
         return Sets.newHashSet(names);
     }
 
+    public Map<String, Set<String>> getNamedEntities(String content) {
+        Set<String> modelKeySet = this.nameFinderModels.keySet();
+        String[] models = modelKeySet.stream().toArray(String[]::new);
+        return this.getNamedEntities(content, models);
+    }
+
     public Map<String, Set<String>> getNamedEntities(String content, String[] models) {
         Map<String, Set<String>> namedEntities = new HashMap<>();
 
@@ -75,7 +84,7 @@ public class OpenNLPService {
 
     private TokenNameFinderModel getTokenNameFinderModel(String fileName) {
 //        URL url = ClassLoader.getSystemResource(fileName);
-        String fileNameWithPath = "src/main/resources/models/" + fileName;
+        String fileNameWithPath = MODEL_DIR + fileName;
         System.out.println(fileNameWithPath);
 
 //        try(InputStream is = new FileInputStream(url.getFile())) {
@@ -93,7 +102,7 @@ public class OpenNLPService {
     public static void main(String[] args) {
         OpenNLPService openNLPService = new OpenNLPService();
 
-        String test = "David should have read more of his thesis today, in preperation for his trip to Brighton next week";
+        String test = "David should have read more of his thesis today, in preparation for his trip to Brighton next week";
 
         String[] models = new String[] {
                 "persons",

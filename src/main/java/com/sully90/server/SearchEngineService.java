@@ -35,11 +35,6 @@ public class SearchEngineService {
     private static Map<String, Double> fieldWeights;
 
     private static OpenNLPService openNLPService;
-    private static String[] nlpModels;
-
-    static {
-        init();
-    }
 
     public static void init() {
         fieldWeights = new LinkedHashMap<String, Double>() {{
@@ -49,11 +44,6 @@ public class SearchEngineService {
 
         searchEngine = new OpenNLPElasticSearchClient<>(ElasticIndex.MOVIES, Movie.class);
         openNLPService = new OpenNLPService();
-        nlpModels = new String[] {
-                "persons",
-                "dates",
-                "locations"
-        };
     }
 
     @GET
@@ -70,7 +60,7 @@ public class SearchEngineService {
     @Path("json/{query}")
     @Produces({ MediaType.APPLICATION_JSON })
     public Response searchMovies(@PathParam("query") String query) {
-        Map<String, Set<String>> namedEntities = openNLPService.getNamedEntities(query, nlpModels);
+        Map<String, Set<String>> namedEntities = openNLPService.getNamedEntities(query);
 
         System.out.println(namedEntities);
 
