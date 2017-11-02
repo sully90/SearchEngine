@@ -38,8 +38,8 @@ public class SearchEngineService {
 
     public static void init() {
         fieldWeights = new LinkedHashMap<String, Double>() {{
-            put("popularity", 0.25);
-            put("averageVote", 0.75);
+//            put("popularity", 0.25);
+            put("averageVote", 1.0d);
         }};
 
         searchEngine = new OpenNLPElasticSearchClient<>(ElasticIndex.MOVIES, Movie.class);
@@ -90,10 +90,11 @@ public class SearchEngineService {
 
 
     private static QueryBuilder getQueryBuilder(String queryText, Map<String, Set<String>> namedEntities) {
-        QueryBuilder match = QueryBuilders.multiMatchQuery(
-                queryText, "title", "overview"
-        );
-        BoolQueryBuilder qb = QueryBuilders.boolQuery().should(match);
+        QueryBuilder titleMatch = QueryBuilders.matchQuery("title", queryText).boost(5.0f);
+
+        QueryBuilder overviewQuery = QueryBuilders.matchQuery("overview", queryText).boost(1.0f).lenient(true);
+
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery().should(titleMatch).should(overviewQuery);
 
         for (String key : namedEntities.keySet()) {
             Set<String> values = namedEntities.get(key);
@@ -102,10 +103,23 @@ public class SearchEngineService {
                 String value = itValues.next();
 
                 // Query against entities.X field and boost
-                QueryBuilder termQuery = QueryBuilders.termQuery("entities." + key, value).boost(2.0f);
-                qb.should(termQuery);
+                QueryBuilder matchQuery = QueryBuilders.matchQuery("entities." + key, value)
+                        .fuzzyTranspositions(false).boost(10.0f);
+//                qb.should(matchQuery);
+                boolQueryBuilder.must(matchQuery);
+
             }
         }
+
+        ScoreScript<Movie> scoreScript = new ScoreScript<>(Movie.class);
+
+        for (String key : fieldWeights.keySet()) {
+            scoreScript.builder().add(key, fieldWeights.get(key), ScoreScriptBuilder.ScriptOperator.MULTIPLY, ScoreScriptBuilder.ScriptOperator.MULTIPLY);
+        }
+
+        ScriptScoreFunctionBuilder scriptScoreFunctionBuilder = scoreScript.getScript();
+        QueryBuilder qb = QueryBuilders.functionScoreQuery(boolQueryBuilder, scriptScoreFunctionBuilder)
+                .scoreMode(FiltersFunctionScoreQuery.ScoreMode.AVG);
 
         System.out.println(qb.toString());
         return qb;
@@ -113,10 +127,9 @@ public class SearchEngineService {
 
 
     @Deprecated
-    private static QueryBuilder buildQuery(String queryText, Map<String, Double> fieldWeights) {
-        QueryBuilder match = QueryBuilders.multiMatchQuery(
-                queryText, "title", "overview", "tagLine"
-        );
+    private static QueryBuilder overviewQuery(String queryText, Map<String, Double> fieldWeights) {
+        QueryBuilder match = QueryBuilders.matchQuery(
+                "overview", queryText).boost(1.0f);
 
         ScoreScript<Movie> scoreScript = new ScoreScript<>(Movie.class);
 
