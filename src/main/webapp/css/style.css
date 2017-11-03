@@ -8,6 +8,18 @@
     a {
         color: #ccc;
     }
+
+    #searchWrapper ul{
+	    list-style-type: none;
+	    color: orange;
+    }
+
+
+    #searchWrapper ul li a{
+	    display: inline;
+	    margin: 20px;
+
+    }
     
     /*-------------------------------------*/
     
@@ -129,6 +141,8 @@
         border: 0;
         padding: 0;
     }
+
+
 .byline p{
   text-align:center;
   color:#c6c6c6;

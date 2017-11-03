@@ -7,6 +7,7 @@ import com.sully90.nlp.opennlp.OpenNLPService;
 import com.sully90.persistence.elastic.util.ElasticIndex;
 import com.sully90.search.client.OpenNLPElasticSearchClient;
 import com.sully90.server.models.UpdateRequest;
+import org.bson.types.ObjectId;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.common.lucene.search.function.FiltersFunctionScoreQuery;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -50,10 +51,7 @@ public class SearchEngineService {
     @Path("/index")
     @Produces({ MediaType.TEXT_HTML })
     public Viewable index() {
-        Map<String, String> model = new HashMap<>();
-        model.put("hello", "Hello");
-        model.put("world", "World");
-        return new Viewable("/index", model);
+        return new Viewable("/index", null);
     }
 
     @GET
@@ -79,6 +77,14 @@ public class SearchEngineService {
         return ok(movies);
     }
 
+    @GET
+    @Path("/index/result/{mongoId}")
+    @Produces({ MediaType.APPLICATION_JSON })
+    public Response result(@PathParam("mongoId") String mongoId) {
+        ObjectId id = new ObjectId(mongoId);
+        Movie movie = Movie.finder().findOne(id);
+        return ok(movie);
+    }
 
     @POST
     @Path("/json/update/post")
