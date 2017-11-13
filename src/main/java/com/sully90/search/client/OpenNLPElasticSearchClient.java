@@ -23,17 +23,17 @@ public class OpenNLPElasticSearchClient<T> extends ElasticSearchClient<T> {
 
     @Override
     public void index(T entity) {
-        indexWithPipeline(entity, Pipeline.OPENNLP.getPipelineName());
+        super.indexWithPipeline(entity, Pipeline.OPENNLP.getPipelineName());
     }
 
     @Override
     public void index(List<T> entities) {
-        indexWithPipeline(entities, Pipeline.OPENNLP.getPipelineName());
+        super.indexWithPipeline(entities, Pipeline.OPENNLP.getPipelineName());
     }
 
     @Override
     public void index(Stream<T> entities) {
-        indexWithPipeline(entities, Pipeline.OPENNLP.getPipelineName());
+        super.indexWithPipeline(entities, Pipeline.OPENNLP.getPipelineName());
     }
 
 }

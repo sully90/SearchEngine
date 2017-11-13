@@ -62,12 +62,7 @@ public class SearchEngineService {
 
         System.out.println(namedEntities);
 
-//        QueryBuilder qb = buildQuery(query, fieldWeights);
-        QueryBuilder qb = getQueryBuilder(query, namedEntities);
-
-        for (String key : namedEntities.keySet()) {
-
-        }
+        QueryBuilder qb = buildQuery(query, namedEntities);
 
         if (LOGGER.isDebugEnabled()) LOGGER.debug("SearchEngineService: searchMovies: got query: " + query);
 
@@ -95,7 +90,7 @@ public class SearchEngineService {
     }
 
 
-    private static QueryBuilder getQueryBuilder(String queryText, Map<String, Set<String>> namedEntities) {
+    private static QueryBuilder buildQuery(String queryText, Map<String, Set<String>> namedEntities) {
         QueryBuilder titleMatch = QueryBuilders.matchQuery("title", queryText).boost(5.0f);
 
         QueryBuilder overviewQuery = QueryBuilders.matchQuery("overview", queryText).boost(1.0f).lenient(true);
