@@ -19,6 +19,8 @@ public class Update {
         List<Movie> movies = new ArrayList<>();
         iterable.forEach(movies::add);
 
+        System.out.println(movies.size());
+
         searchClient.index(movies);
 
         // The Bulk Insert is asynchronous, we give ElasticSearch some time to do the insert:

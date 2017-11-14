@@ -76,9 +76,12 @@ public class SearchEngineService {
     @Path("/index/result/{mongoId}")
     @Produces({ MediaType.APPLICATION_JSON })
     public Response result(@PathParam("mongoId") String mongoId) {
-        ObjectId id = new ObjectId(mongoId);
-        Movie movie = Movie.finder().findOne(id);
-        return ok(movie);
+//        ObjectId id = new ObjectId(mongoId);
+//        Movie movie = Movie.finder().findOne(id);
+//        return ok(movie);
+        QueryBuilder qb = QueryBuilders.matchQuery("mongoId", mongoId);
+        List<Movie> hits = searchEngine.searchAndDeserialize(qb);
+        return ok(hits);
     }
 
     @POST
@@ -122,7 +125,7 @@ public class SearchEngineService {
         QueryBuilder qb = QueryBuilders.functionScoreQuery(boolQueryBuilder, scriptScoreFunctionBuilder)
                 .scoreMode(FiltersFunctionScoreQuery.ScoreMode.AVG);
 
-        System.out.println(qb.toString());
+//        System.out.println(qb.toString());
         return qb;
     }
 

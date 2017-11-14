@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class OpenNLPService {
 
-    private static final String CONFIGURATION_KEY = "opennlp.entities.model.";
+    private static final String CONFIGURATION_KEY = "opennlp.entities.model.file.";
     private static final String MODEL_DIR = "src/main/resources/models/";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenNLPService.class);
@@ -57,6 +57,7 @@ public class OpenNLPService {
         }
 
         String[] tokens = SimpleTokenizer.INSTANCE.tokenize(content);
+
         Span[] spans = new NameFinderME(nameFinderModel).find(tokens);
         String[] names = Span.spansToStrings(spans, tokens);
         return Sets.newHashSet(names);
