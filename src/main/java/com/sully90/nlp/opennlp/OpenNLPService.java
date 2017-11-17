@@ -1,22 +1,22 @@
 package com.sully90.nlp.opennlp;
 
-import com.google.common.collect.Sets;
 import com.sully90.util.Configuration;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
+import opennlp.tools.sentdetect.SentenceDetectorME;
+import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.SimpleTokenizer;
 import opennlp.tools.util.Span;
+import org.elasticsearch.common.util.set.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class OpenNLPService {
@@ -56,11 +56,25 @@ public class OpenNLPService {
             threadLocal.set(nameFinderModel);
         }
 
-        String[] tokens = SimpleTokenizer.INSTANCE.tokenize(content);
+        //Instantiating the SentenceDetectorME class
+        SentenceModel sentenceModel = loadSentenceModel();
+        SentenceDetectorME detector = new SentenceDetectorME(sentenceModel);
 
-        Span[] spans = new NameFinderME(nameFinderModel).find(tokens);
-        String[] names = Span.spansToStrings(spans, tokens);
-        return Sets.newHashSet(names);
+        //Detecting the sentence
+        String sentences[] = detector.sentDetect(content);
+
+        Set<String> set = new HashSet<>();
+
+        for (String sentence : sentences) {
+
+            String[] tokens = SimpleTokenizer.INSTANCE.tokenize(content);
+
+            Span[] spans = new NameFinderME(nameFinderModel).find(tokens);
+            String[] names = Span.spansToStrings(spans, tokens);
+            set.addAll(Sets.newHashSet(names));
+        }
+        return set;
+//        return Sets.newHashSet(names);
     }
 
     public Map<String, Set<String>> getNamedEntities(String content) {
@@ -114,6 +128,19 @@ public class OpenNLPService {
         for (String model : models) {
             System.out.println(openNLPService.find(test, model));
         }
+    }
+
+    private SentenceModel loadSentenceModel() {
+        String filename = Configuration.config().getProperty("opennlp.tokenizer.file.sentences");
+
+        try (InputStream is = new FileInputStream(MODEL_DIR + filename)) {
+            SentenceModel sentenceModel = new SentenceModel(is);
+            return sentenceModel;
+        } catch (IOException e) {
+            LOGGER.error("Unable to load sentences model", e);
+        }
+
+        return null;
     }
 
 }

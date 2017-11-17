@@ -7,9 +7,7 @@ import com.sully90.nlp.opennlp.OpenNLPService;
 import com.sully90.persistence.elastic.util.ElasticIndex;
 import com.sully90.search.client.OpenNLPElasticSearchClient;
 import com.sully90.server.models.UpdateRequest;
-import org.bson.types.ObjectId;
 import org.elasticsearch.action.search.SearchType;
-import org.elasticsearch.common.lucene.search.function.FiltersFunctionScoreQuery;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -122,8 +120,7 @@ public class SearchEngineService {
         }
 
         ScriptScoreFunctionBuilder scriptScoreFunctionBuilder = scoreScript.getScript();
-        QueryBuilder qb = QueryBuilders.functionScoreQuery(boolQueryBuilder, scriptScoreFunctionBuilder)
-                .scoreMode(FiltersFunctionScoreQuery.ScoreMode.AVG);
+        QueryBuilder qb = QueryBuilders.functionScoreQuery(boolQueryBuilder, scriptScoreFunctionBuilder);
 
 //        System.out.println(qb.toString());
         return qb;
@@ -142,8 +139,7 @@ public class SearchEngineService {
         }
 
         ScriptScoreFunctionBuilder scriptScoreFunctionBuilder = scoreScript.getScript();
-        QueryBuilder qb = QueryBuilders.functionScoreQuery(match, scriptScoreFunctionBuilder)
-                .scoreMode(FiltersFunctionScoreQuery.ScoreMode.AVG);
+        QueryBuilder qb = QueryBuilders.functionScoreQuery(match, scriptScoreFunctionBuilder);
 
         return qb;
     }
