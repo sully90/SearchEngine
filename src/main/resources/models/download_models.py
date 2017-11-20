@@ -12,7 +12,8 @@ def download_model(model_name):
 
 if __name__ == "__main__":
     model_names = ["en-ner-dates.bin", "en-ner-locations.bin", "en-ner-money.bin", \
-        "en-ner-organization.bin", "en-ner-percentage.bin", "en-ner-persons.bin", "en-ner-time.bin"]
+        "en-ner-organization.bin", "en-ner-percentage.bin", "en-ner-persons.bin", "en-ner-time.bin", \
+        "en-sent.bin", "en-token.bin"]
 
     for model_name in model_names:
         if (os.path.isfile("./%s" % model_name) is False):
