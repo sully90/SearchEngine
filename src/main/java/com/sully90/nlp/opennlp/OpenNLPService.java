@@ -3,15 +3,10 @@ package com.sully90.nlp.opennlp;
 import com.sully90.util.Configuration;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
-import opennlp.tools.ngram.NGramModel;
-import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
-import opennlp.tools.tokenize.SimpleTokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.Span;
-import opennlp.tools.util.StringList;
-import org.elasticsearch.common.util.set.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,58 +62,12 @@ public class OpenNLPService {
             Span[] spans = new NameFinderME(model).find(simpleTokens);
             String[] names = Span.spansToStrings(spans, simpleTokens);
 
-//                for (Span span : spans) {
-//                    StringBuilder builder = new StringBuilder();
-//                    for (int i = span.getStart(); i < span.getEnd(); i++) {
-//                        builder.append(simpleTokens[i]);
-//                        if (i < span.getEnd() - 1) {
-//                            builder.append(" ");
-//                        }
-//                    }
-//                    System.out.println( builder.toString() + ":" + span.getProb());
-//                }
-
             for (String name : names) {
                 nameSet.add(name);
             }
         }
 
         return nameSet;
-    }
-
-    public static List<String> generateNgramsUpto(String str, int maxGramSize) {
-
-        List<String> sentence = Arrays.asList(str.split("[\\W+]"));
-
-        List<String> ngrams = new ArrayList<String>();
-        int ngramSize = 0;
-        StringBuilder sb = null;
-
-        //sentence becomes ngrams
-        for (ListIterator<String> it = sentence.listIterator(); it.hasNext();) {
-            String word = (String) it.next();
-
-            //1- add the word itself
-            sb = new StringBuilder(word);
-            ngrams.add(word);
-            ngramSize=1;
-            it.previous();
-
-            //2- insert prevs of the word and add those too
-            while(it.hasPrevious() && ngramSize<maxGramSize){
-                sb.insert(0,' ');
-                sb.insert(0,it.previous());
-                ngrams.add(sb.toString() + ",");
-                ngramSize++;
-            }
-
-            //go back to initial position
-            while(ngramSize>0){
-                ngramSize--;
-                it.next();
-            }
-        }
-        return ngrams;
     }
 
     public Map<String, Set<String>> getNamedEntities(String content) {
@@ -159,6 +108,7 @@ public class OpenNLPService {
                     while (otherEntitySetIterator.hasNext()) {
                         String otherEntity = otherEntitySetIterator.next();
                         if (entity.contains(otherEntity)) {
+                            System.out.println(entity + " : " + otherEntity);
                             entity = entity.replace(otherEntity, "").trim();
                         }
                     }
@@ -203,7 +153,7 @@ public class OpenNLPService {
     }
 
     private TokenizerModel loadTokenizerModel() {
-        String filename = "en-token.bin";
+        String filename = Configuration.config().getProperty("opennlp.tokenizer.file.token");
 
         try (InputStream is = new FileInputStream(MODEL_DIR + filename)) {
             TokenizerModel tokenizerModel = new TokenizerModel(is);
@@ -213,6 +163,41 @@ public class OpenNLPService {
         }
 
         return null;
+    }
+
+    public static List<String> generateNgramsUpto(String str, int maxGramSize) {
+
+        List<String> sentence = Arrays.asList(str.split("[\\W+]"));
+
+        List<String> ngrams = new ArrayList<String>();
+        int ngramSize = 0;
+        StringBuilder sb = null;
+
+        //sentence becomes ngrams
+        for (ListIterator<String> it = sentence.listIterator(); it.hasNext();) {
+            String word = (String) it.next();
+
+            //1- add the word itself
+            sb = new StringBuilder(word);
+            ngrams.add(word);
+            ngramSize=1;
+            it.previous();
+
+            //2- insert prevs of the word and add those too
+            while(it.hasPrevious() && ngramSize<maxGramSize){
+                sb.insert(0,' ');
+                sb.insert(0,it.previous());
+                ngrams.add(sb.toString() + ",");
+                ngramSize++;
+            }
+
+            //go back to initial position
+            while(ngramSize>0){
+                ngramSize--;
+                it.next();
+            }
+        }
+        return ngrams;
     }
 
 }
