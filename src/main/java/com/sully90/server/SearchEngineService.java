@@ -109,7 +109,7 @@ public class SearchEngineService {
                 QueryBuilder matchQuery = QueryBuilders.matchQuery("entities." + key, value)
                         .fuzzyTranspositions(false).operator(Operator.AND).boost(10.0f);
 //                qb.should(matchQuery);
-                boolQueryBuilder.must(matchQuery);
+                boolQueryBuilder.should(matchQuery);
 
             }
         }
