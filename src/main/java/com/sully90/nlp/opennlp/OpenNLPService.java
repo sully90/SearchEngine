@@ -3,14 +3,17 @@ package com.sully90.nlp.opennlp;
 import com.sully90.util.Configuration;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
+import opennlp.tools.ngram.NGramModel;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 import opennlp.tools.tokenize.SimpleTokenizer;
+import opennlp.tools.tokenize.TokenizerME;
+import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.Span;
+import opennlp.tools.util.StringList;
 import org.elasticsearch.common.util.set.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -46,35 +49,76 @@ public class OpenNLPService {
     }
 
     public Set<String> find(String content, String field) {
-        // Performs named entity extraction using one of the available models in conf/application.conf
         if (!nameFinderModels.containsKey(field)) {
             throw new RuntimeException(String.format("Could not find field [%s], possible values %s", field, nameFinderModels.keySet()));
         }
 
-        TokenNameFinderModel nameFinderModel = nameFinderModels.get(field);
-        if (threadLocal.get() == null || !threadLocal.get().equals(nameFinderModel)) {
-            threadLocal.set(nameFinderModel);
+        TokenNameFinderModel model = nameFinderModels.get(field);
+
+        Set<String> nameSet = new HashSet<>();
+
+        TokenizerME tokenizer = new TokenizerME(this.loadTokenizerModel());
+
+        List<String> ngrams = generateNgramsUpto(content, 5);
+
+        for (String ngram : ngrams) {
+
+            String[] simpleTokens = tokenizer.tokenize(ngram);
+            Span[] spans = new NameFinderME(model).find(simpleTokens);
+            String[] names = Span.spansToStrings(spans, simpleTokens);
+
+//                for (Span span : spans) {
+//                    StringBuilder builder = new StringBuilder();
+//                    for (int i = span.getStart(); i < span.getEnd(); i++) {
+//                        builder.append(simpleTokens[i]);
+//                        if (i < span.getEnd() - 1) {
+//                            builder.append(" ");
+//                        }
+//                    }
+//                    System.out.println( builder.toString() + ":" + span.getProb());
+//                }
+
+            for (String name : names) {
+                nameSet.add(name);
+            }
         }
 
-        //Instantiating the SentenceDetectorME class
-        SentenceModel sentenceModel = loadSentenceModel();
-        SentenceDetectorME detector = new SentenceDetectorME(sentenceModel);
+        return nameSet;
+    }
 
-        //Detecting the sentence
-        String sentences[] = detector.sentDetect(content);
+    public static List<String> generateNgramsUpto(String str, int maxGramSize) {
 
-        Set<String> set = new HashSet<>();
+        List<String> sentence = Arrays.asList(str.split("[\\W+]"));
 
-        for (String sentence : sentences) {
+        List<String> ngrams = new ArrayList<String>();
+        int ngramSize = 0;
+        StringBuilder sb = null;
 
-            String[] tokens = SimpleTokenizer.INSTANCE.tokenize(content);
+        //sentence becomes ngrams
+        for (ListIterator<String> it = sentence.listIterator(); it.hasNext();) {
+            String word = (String) it.next();
 
-            Span[] spans = new NameFinderME(nameFinderModel).find(tokens);
-            String[] names = Span.spansToStrings(spans, tokens);
-            set.addAll(Sets.newHashSet(names));
+            //1- add the word itself
+            sb = new StringBuilder(word);
+            ngrams.add(word);
+            ngramSize=1;
+            it.previous();
+
+            //2- insert prevs of the word and add those too
+            while(it.hasPrevious() && ngramSize<maxGramSize){
+                sb.insert(0,' ');
+                sb.insert(0,it.previous());
+                ngrams.add(sb.toString() + ",");
+                ngramSize++;
+            }
+
+            //go back to initial position
+            while(ngramSize>0){
+                ngramSize--;
+                it.next();
+            }
         }
-        return set;
-//        return Sets.newHashSet(names);
+        return ngrams;
     }
 
     public Map<String, Set<String>> getNamedEntities(String content) {
@@ -94,7 +138,38 @@ public class OpenNLPService {
             }
         }
 
-        return namedEntities;
+        Map<String, Set<String>> cleanedNamedEntities = new HashMap<>();
+
+        for (String model : models) {
+            Set<String> entitySet = namedEntities.get(model);
+            Iterator<String> entitySetIterator = entitySet.iterator();
+
+            Set<String> cleanEntities = new HashSet<>();
+
+            while (entitySetIterator.hasNext()) {
+                String entity = entitySetIterator.next();
+
+                // Clean this entity against all other models
+                for (String otherModel : models) {
+                    if (otherModel.equals(model)) continue;
+
+                    Set<String> otherEntitySet = namedEntities.get(otherModel);
+                    Iterator<String> otherEntitySetIterator = otherEntitySet.iterator();
+
+                    while (otherEntitySetIterator.hasNext()) {
+                        String otherEntity = otherEntitySetIterator.next();
+                        if (entity.contains(otherEntity)) {
+                            entity = entity.replace(otherEntity, "").trim();
+                        }
+                    }
+                }
+                // Entity has been cleaned
+                cleanEntities.add(entity);
+            }
+            cleanedNamedEntities.put(model, cleanEntities);
+        }
+
+        return cleanedNamedEntities;
     }
 
     private TokenNameFinderModel getTokenNameFinderModel(String fileName) {
@@ -114,28 +189,25 @@ public class OpenNLPService {
         return null;
     }
 
-    public static void main(String[] args) {
-        OpenNLPService openNLPService = new OpenNLPService();
-
-        String test = "David should have read more of his thesis today, in preparation for his trip to Brighton next week";
-
-        String[] models = new String[] {
-                "persons",
-                "dates",
-                "locations"
-        };
-
-        for (String model : models) {
-            System.out.println(openNLPService.find(test, model));
-        }
-    }
-
     private SentenceModel loadSentenceModel() {
         String filename = Configuration.config().getProperty("opennlp.tokenizer.file.sentences");
 
         try (InputStream is = new FileInputStream(MODEL_DIR + filename)) {
             SentenceModel sentenceModel = new SentenceModel(is);
             return sentenceModel;
+        } catch (IOException e) {
+            LOGGER.error("Unable to load sentences model", e);
+        }
+
+        return null;
+    }
+
+    private TokenizerModel loadTokenizerModel() {
+        String filename = "en-token.bin";
+
+        try (InputStream is = new FileInputStream(MODEL_DIR + filename)) {
+            TokenizerModel tokenizerModel = new TokenizerModel(is);
+            return tokenizerModel;
         } catch (IOException e) {
             LOGGER.error("Unable to load sentences model", e);
         }

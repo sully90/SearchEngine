@@ -122,7 +122,7 @@ public class SearchEngineService {
         ScriptScoreFunctionBuilder scriptScoreFunctionBuilder = scoreScript.getScript();
         QueryBuilder qb = QueryBuilders.functionScoreQuery(boolQueryBuilder, scriptScoreFunctionBuilder);
 
-//        System.out.println(qb.toString());
+        System.out.println(qb.toString());
         return qb;
     }
 

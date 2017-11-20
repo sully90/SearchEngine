@@ -24,7 +24,7 @@ public class Update {
         searchClient.index(movies);
 
         // The Bulk Insert is asynchronous, we give ElasticSearch some time to do the insert:
-        searchClient.awaitClose(1, TimeUnit.SECONDS);
+        searchClient.awaitClose(1, TimeUnit.MINUTES);
     }
 
 }

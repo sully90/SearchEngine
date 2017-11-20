@@ -285,6 +285,14 @@
             <resource>
                 <directory>src/main/resources/models/</directory>
             </resource>
+
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${project.build.directory}</targetPath>
+                <includes>
+                    <include>log4j.properties</include>
+                </includes>
+            </resource>
         </resources>
     </build>
 </project>
