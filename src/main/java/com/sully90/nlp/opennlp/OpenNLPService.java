@@ -75,7 +75,6 @@ public class OpenNLPService {
                 sb.append(", ");
             }
         }
-
         sb.append(".");
 
         String[] simpleTokens = tokenizer.tokenize(sb.toString());
@@ -85,20 +84,6 @@ public class OpenNLPService {
         for (String name : names) {
             nameSet.add(name);
         }
-
-//        for (String ngram : ngrams) {
-//
-//            System.out.println(ngram);
-//
-//            String[] simpleTokens = tokenizer.tokenize(ngram);
-//
-//            Span[] spans = new NameFinderME(model).find(simpleTokens);
-//            String[] names = Span.spansToStrings(spans, simpleTokens);
-//
-//            for (String name : names) {
-//                nameSet.add(name);
-//            }
-//        }
 
         return nameSet;
     }
