@@ -21,6 +21,7 @@ public class OpenNLPService {
 
     private static final String CONFIGURATION_KEY = "opennlp.entities.model.file.";
     private static final String MODEL_DIR = "src/main/resources/models/";
+    private static String DEFAULT_STOP_WORD = "The ";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenNLPService.class);
 
@@ -48,6 +49,12 @@ public class OpenNLPService {
             throw new RuntimeException(String.format("Could not find field [%s], possible values %s", field, nameFinderModels.keySet()));
         }
 
+        // If content contains only one word, prepend the default stop word to help OpenNLP
+        int nwords = countWords(content);
+        if (nwords == 1) {
+            content = new StringBuilder(DEFAULT_STOP_WORD).append(content).toString();
+        }
+
         TokenNameFinderModel model = nameFinderModels.get(field);
 
         Set<String> nameSet = new HashSet<>();
@@ -56,16 +63,42 @@ public class OpenNLPService {
 
         List<String> ngrams = generateNgramsUpto(content, 5);
 
-        for (String ngram : ngrams) {
+        // Combine the ngrams into a single sentence with commas, which we will use for the named
+        // entity extraction.
+        StringBuilder sb = new StringBuilder();
+        Iterator<String> it = ngrams.iterator();
 
-            String[] simpleTokens = tokenizer.tokenize(ngram);
-            Span[] spans = new NameFinderME(model).find(simpleTokens);
-            String[] names = Span.spansToStrings(spans, simpleTokens);
-
-            for (String name : names) {
-                nameSet.add(name);
+        while (it.hasNext()) {
+            String gram = it.next();
+            sb.append(gram);
+            if (it.hasNext()) {
+                sb.append(", ");
             }
         }
+
+        sb.append(".");
+
+        String[] simpleTokens = tokenizer.tokenize(sb.toString());
+        Span[] spans = new NameFinderME(model).find(simpleTokens);
+        String[] names = Span.spansToStrings(spans, simpleTokens);
+
+        for (String name : names) {
+            nameSet.add(name);
+        }
+
+//        for (String ngram : ngrams) {
+//
+//            System.out.println(ngram);
+//
+//            String[] simpleTokens = tokenizer.tokenize(ngram);
+//
+//            Span[] spans = new NameFinderME(model).find(simpleTokens);
+//            String[] names = Span.spansToStrings(spans, simpleTokens);
+//
+//            for (String name : names) {
+//                nameSet.add(name);
+//            }
+//        }
 
         return nameSet;
     }
@@ -169,13 +202,13 @@ public class OpenNLPService {
 
         List<String> sentence = Arrays.asList(str.split("[\\W+]"));
 
-        List<String> ngrams = new ArrayList<String>();
+        List<String> ngrams = new LinkedList<>();
         int ngramSize = 0;
         StringBuilder sb = null;
 
         //sentence becomes ngrams
         for (ListIterator<String> it = sentence.listIterator(); it.hasNext();) {
-            String word = (String) it.next();
+            String word = it.next();
 
             //1- add the word itself
             sb = new StringBuilder(word);
@@ -198,6 +231,24 @@ public class OpenNLPService {
             }
         }
         return ngrams;
+    }
+
+    private static int countWords(String content) {
+        if (content == null || content.isEmpty()) {
+            return 0;
+        }
+
+        String[] words = content.split("\\s+");
+        return words.length;
+    }
+
+    public static void main(String[] args) {
+        OpenNLPService service = new OpenNLPService();
+
+        String content = "New York Italy";
+        Map<String, Set<String>> entities = service.getNamedEntities(content);
+
+        System.out.println(entities);
     }
 
 }
