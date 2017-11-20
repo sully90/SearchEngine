@@ -88,6 +88,7 @@ public class SearchEngineService {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     public Response update(UpdateRequest updateRequest) {
+        System.out.println();
         return created(updateRequest);
     }
 

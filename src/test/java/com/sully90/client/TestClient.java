@@ -7,6 +7,8 @@ import org.junit.Test;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class TestClient {
@@ -33,14 +35,33 @@ public class TestClient {
 
         String path = "search/json/update/post";
 
-        Movie movie = Movie.finder().findOne();
-        UpdateRequest updateRequest = new UpdateRequest(movie.getObjectId().toString(), 1, 3);
+        List<Movie> movies = new ArrayList<>();
+        Movie.finder().find().forEach(movies::add);
+
+        LinkedList<String> ids = new LinkedList<>();
+        LinkedList<Integer> originalRanks = new LinkedList<>();
+        LinkedList<Integer> judgements = new LinkedList<>();
+
+        for (int i = 0; i < movies.size(); i++) {
+            ids.add(movies.get(i).getMongoId());
+            judgements.add(Integer.valueOf(movies.size() - i));
+            originalRanks.add(Integer.valueOf(i));
+        }
+
+        UpdateRequest updateRequest = new UpdateRequest(ids, originalRanks, judgements);
 
         try {
             Response response = jerseyClient.post(path, updateRequest, ClientResponseType.JSON);
-            UpdateRequest returnedUpdateRequest = response.readEntity(new GenericType<UpdateRequest>(){});
 
-            System.out.println(returnedUpdateRequest.toString());
+            if (response.getStatus() != 201) {
+                System.out.println(response);
+            } else {
+
+                UpdateRequest returnedUpdateRequest = response.readEntity(new GenericType<UpdateRequest>() {
+                });
+
+                System.out.println(returnedUpdateRequest.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
