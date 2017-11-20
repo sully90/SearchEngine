@@ -26,7 +26,7 @@ document.getElementById("searchButton").onclick = function() {
       var items = [];
       $.each( data, function( key, val ) {
         var title = val.title
-        items.push( "<li style='font-size:20px' value='" + val.mongoId + "'><a href=/SearchEngine/search/index/result/" + val.mongoId + ">" + title + "</a></li>" );
+        items.push( "<li style='font-size:20px' value='" + val.mongoId + "'><a href=/SearchEngine/search/index/result/" + val.mongoId + " target='_blank'>" + title + "</a></li>" );
       });
      
 //      $( "<ul/>", {
