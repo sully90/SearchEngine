@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a7fdd5a0-d736-4446-a942-becb50d3e1fc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/log4j.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SearchEngine.iml" afterPath="$PROJECT_DIR$/SearchEngine.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SearchEngine.ipr" afterPath="$PROJECT_DIR$/SearchEngine.ipr" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SearchEngine.iws" afterPath="$PROJECT_DIR$/SearchEngine.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sully90/server/Update.java" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/server/Update.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -175,11 +168,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SearchEngineService.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SearchEngineService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="602">
-              <caret line="125" column="18" lean-forward="true" selection-start-line="125" selection-start-column="18" selection-end-line="125" selection-end-column="18" />
+            <state relative-caret-position="337">
+              <caret line="109" column="73" lean-forward="false" selection-start-line="109" selection-start-column="73" selection-end-line="109" selection-end-column="73" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -187,10 +180,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OpenNLPService.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="OpenNLPService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="582">
+            <state relative-caret-position="329">
               <caret line="161" column="75" lean-forward="false" selection-start-line="161" selection-start-column="75" selection-end-line="161" selection-end-column="75" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -276,8 +269,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/server/Update.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/log4j.properties" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java" />
       </list>
     </option>
   </component>
@@ -1085,23 +1078,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="602">
-          <caret line="125" column="18" lean-forward="true" selection-start-line="125" selection-start-column="18" selection-end-line="125" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="582">
+        <state relative-caret-position="329">
           <caret line="161" column="75" lean-forward="false" selection-start-line="161" selection-start-column="75" selection-end-line="161" selection-end-column="75" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3648#3656#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="109" column="73" lean-forward="false" selection-start-line="109" selection-start-column="73" selection-end-line="109" selection-end-column="73" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

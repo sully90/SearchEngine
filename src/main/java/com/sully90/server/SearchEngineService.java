@@ -9,6 +9,7 @@ import com.sully90.search.client.OpenNLPElasticSearchClient;
 import com.sully90.server.models.UpdateRequest;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.functionscore.ScriptScoreFunctionBuilder;
@@ -106,7 +107,7 @@ public class SearchEngineService {
 
                 // Query against entities.X field and boost
                 QueryBuilder matchQuery = QueryBuilders.matchQuery("entities." + key, value)
-                        .fuzzyTranspositions(false).boost(10.0f);
+                        .fuzzyTranspositions(false).operator(Operator.AND).boost(10.0f);
 //                qb.should(matchQuery);
                 boolQueryBuilder.must(matchQuery);
 
