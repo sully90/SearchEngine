@@ -5,6 +5,7 @@ import com.sully90.util.StringUtils;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.sentdetect.SentenceModel;
+import opennlp.tools.tokenize.SimpleTokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.Span;
@@ -59,35 +60,19 @@ public class OpenNLPService {
             Set<String> nameSet = new HashSet<>();
 
             TokenizerME tokenizer = new TokenizerME(loadTokenizerModel());
-            String[] tokens  = tokenizer.tokenize(content);
+            String[] tokens  = tokenizer.tokenize(field + " " + content);
+//            String[] tokens = SimpleTokenizer.INSTANCE.tokenize(field + " " + content);
 
-            List<String> tokenList = new ArrayList<>();
-            for (String token : tokens) {
-                if (!token.isEmpty() && !token.equals(",")) tokenList.add(token);
-//                if (!token.isEmpty()) tokenList.add(token);
-            }
+            // Perform the named entity extraction
+            Span[] spans = new NameFinderME(model).find(tokens);
+            String[] names = Span.spansToStrings(spans, tokens);
 
-            // Create the power-set of words
-            List<List<String>> powerSet = new LinkedList<>();
-
-            for (int i = 1; i <= tokens.length; i++) {
-                powerSet.addAll(StringUtils.combination(tokenList, i));
-            }
-
-            for (List<String> listSet : powerSet) {
-                tokens = listSet.toArray(new String[listSet.size()]);
-
-                // Perform the named entity extraction
-                Span[] spans = new NameFinderME(model).find(tokens);
-                String[] names = Span.spansToStrings(spans, tokens);
-
-                // Add to the named entity set if we pass the confidence test
-                for (int i = 0; i < names.length; i++) {
-                    String name = names[i];
-                    Span span = spans[i];
+            // Add to the named entity set if we pass the confidence test
+            for (int i = 0; i < names.length; i++) {
+                String name = names[i];
+                Span span = spans[i];
 //                    System.out.println(field + " : " + name + " : " + span.getProb());
-                    if (span.getProb() >= this.probabilityLowerLimit && content.contains(name)) nameSet.add(name);
-                }
+                if (span.getProb() >= this.probabilityLowerLimit && content.contains(name)) nameSet.add(name);
             }
 
             return nameSet;
@@ -113,39 +98,41 @@ public class OpenNLPService {
             }
         }
 
-        Map<String, Set<String>> cleanedNamedEntities = new HashMap<>();
+        return namedEntities;
 
-        for (String model : models) {
-            Set<String> entitySet = namedEntities.get(model);
-            Iterator<String> entitySetIterator = entitySet.iterator();
-
-            Set<String> cleanEntities = new HashSet<>();
-
-            while (entitySetIterator.hasNext()) {
-                String entity = entitySetIterator.next();
-
-                // Clean this entity against all other models
-                for (String otherModel : models) {
-                    if (otherModel.equals(model)) continue;
-
-                    Set<String> otherEntitySet = namedEntities.get(otherModel);
-                    Iterator<String> otherEntitySetIterator = otherEntitySet.iterator();
-
-                    while (otherEntitySetIterator.hasNext()) {
-                        String otherEntity = otherEntitySetIterator.next();
-                        if (entity.contains(otherEntity)) {
-//                            System.out.println(entity + " : " + otherEntity);
-                            entity = entity.replace(otherEntity, "").trim();
-                        }
-                    }
-                }
-                // Entity has been cleaned
-                cleanEntities.add(entity);
-            }
-            cleanedNamedEntities.put(model, cleanEntities);
-        }
-
-        return cleanedNamedEntities;
+//        Map<String, Set<String>> cleanedNamedEntities = new HashMap<>();
+//
+//        for (String model : models) {
+//            Set<String> entitySet = namedEntities.get(model);
+//            Iterator<String> entitySetIterator = entitySet.iterator();
+//
+//            Set<String> cleanEntities = new HashSet<>();
+//
+//            while (entitySetIterator.hasNext()) {
+//                String entity = entitySetIterator.next();
+//
+//                // Clean this entity against all other models
+//                for (String otherModel : models) {
+//                    if (otherModel.equals(model)) continue;
+//
+//                    Set<String> otherEntitySet = namedEntities.get(otherModel);
+//                    Iterator<String> otherEntitySetIterator = otherEntitySet.iterator();
+//
+//                    while (otherEntitySetIterator.hasNext()) {
+//                        String otherEntity = otherEntitySetIterator.next();
+//                        if (entity.contains(otherEntity)) {
+////                            System.out.println(entity + " : " + otherEntity);
+//                            entity = entity.replace(otherEntity, "").trim();
+//                        }
+//                    }
+//                }
+//                // Entity has been cleaned
+//                cleanEntities.add(entity);
+//            }
+//            cleanedNamedEntities.put(model, cleanEntities);
+//        }
+//
+//        return cleanedNamedEntities;
     }
 
     private TokenNameFinderModel getTokenNameFinderModel(String fileName) {
@@ -220,8 +207,8 @@ public class OpenNLPService {
     public static void main(String[] args) {
         OpenNLPService service = new OpenNLPService();
 
-        String content = "James Bond, 1960, New York, Italy";
-//        String content = "New York Italy";
+        String content = "London population";
+//        String content = "David Sullivan Newport";
         long startTime = System.currentTimeMillis();
         Map<String, Set<String>> entities = service.getNamedEntities(content);
         long endTime = System.currentTimeMillis();
