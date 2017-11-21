@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a7fdd5a0-d736-4446-a942-becb50d3e1fc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SearchEngine.iws" afterPath="$PROJECT_DIR$/SearchEngine.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sully90/server/models/UpdateRequest.java" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/server/models/UpdateRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/sully90/client/TestClient.java" afterPath="$PROJECT_DIR$/src/test/java/com/sully90/client/TestClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -183,7 +180,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UpdateRequest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UpdateRequest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/server/models/UpdateRequest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-134">
@@ -223,13 +220,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OpenNLPService.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="OpenNLPService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1140">
-              <caret line="76" column="9" lean-forward="true" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
+            <state relative-caret-position="466">
+              <caret line="282" column="33" lean-forward="false" selection-start-line="282" selection-start-column="33" selection-end-line="282" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#7861#7862#0" expanded="true" />
+                <element signature="e#7905#7906#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -272,6 +271,7 @@
       <find>System.out.ori</find>
       <find>System.out.println</find>
       <find>Sys</find>
+      <find>System</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -296,11 +296,11 @@
         <option value="$PROJECT_DIR$/src/main/webapp/js/test.js" />
         <option value="$PROJECT_DIR$/conf/application.conf" />
         <option value="$PROJECT_DIR$/src/main/resources/models/download_models.py" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/server/SearchEngineService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/client/JerseyClient.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/sully90/client/TestClient.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sully90/server/models/UpdateRequest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java" />
       </list>
     </option>
   </component>
@@ -512,7 +512,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.UpdateRequest">
+  <component name="RunManager" selected="Application.OpenNLPService">
     <configuration name="OpenNLPService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -677,10 +677,10 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.UpdateRequest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.TestClient.testPost" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.TestClient.testGet" />
-        <item index="3" class="java.lang.String" itemvalue="Application.OpenNLPService" />
+        <item index="0" class="java.lang.String" itemvalue="Application.OpenNLPService" />
+        <item index="1" class="java.lang.String" itemvalue="Application.UpdateRequest" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.TestClient.testPost" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.TestClient.testGet" />
         <item index="4" class="java.lang.String" itemvalue="Application.Update" />
       </list>
     </recent_temporary>
@@ -882,6 +882,8 @@
           <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="54" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#7861#7862#0" expanded="true" />
+            <element signature="e#7905#7906#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -928,6 +930,8 @@
           <caret line="84" column="42" lean-forward="true" selection-start-line="84" selection-start-column="42" selection-end-line="84" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#7861#7862#0" expanded="true" />
+            <element signature="e#7905#7906#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -948,6 +952,8 @@
           <caret line="51" column="9" lean-forward="false" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#7861#7862#0" expanded="true" />
+            <element signature="e#7905#7906#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1001,6 +1007,8 @@
           <caret line="51" column="9" lean-forward="false" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#7861#7862#0" expanded="true" />
+            <element signature="e#7905#7906#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1054,6 +1062,8 @@
           <caret line="51" column="9" lean-forward="false" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#7861#7862#0" expanded="true" />
+            <element signature="e#7905#7906#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1107,6 +1117,8 @@
           <caret line="51" column="9" lean-forward="false" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#7861#7862#0" expanded="true" />
+            <element signature="e#7905#7906#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1160,6 +1172,8 @@
           <caret line="51" column="9" lean-forward="false" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#7861#7862#0" expanded="true" />
+            <element signature="e#7905#7906#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1270,16 +1284,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="76" column="9" lean-forward="true" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/search/client/OpenNLPElasticSearchClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -1330,6 +1334,18 @@
             <element signature="e#931#932#0" expanded="true" />
             <element signature="e#980#981#0" expanded="true" />
             <element signature="e#1012#1013#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="466">
+          <caret line="282" column="33" lean-forward="false" selection-start-line="282" selection-start-column="33" selection-end-line="282" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#7861#7862#0" expanded="true" />
+            <element signature="e#7905#7906#0" expanded="true" />
           </folding>
         </state>
       </provider>
