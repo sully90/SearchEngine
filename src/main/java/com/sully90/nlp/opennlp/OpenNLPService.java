@@ -25,7 +25,7 @@ public class OpenNLPService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenNLPService.class);
 
-    protected double probabilityLowerLimit = 0.7d;
+    protected double probabilityLowerLimit = 0.75d;
 
     // TokenNameFinder is not thread safe, so use a threadLocal hack
     private ThreadLocal<TokenNameFinderModel> threadLocal = new ThreadLocal<>();
@@ -64,6 +64,7 @@ public class OpenNLPService {
             List<String> tokenList = new ArrayList<>();
             for (String token : tokens) {
                 if (!token.isEmpty() && !token.equals(",")) tokenList.add(token);
+//                if (!token.isEmpty()) tokenList.add(token);
             }
 
             // Create the power-set of words
@@ -71,10 +72,6 @@ public class OpenNLPService {
 
             for (int i = 1; i <= tokens.length; i++) {
                 powerSet.addAll(StringUtils.combination(tokenList, i));
-            }
-
-            if (field.equals("dates")) {
-                System.out.println(powerSet);
             }
 
             for (List<String> listSet : powerSet) {
@@ -88,6 +85,7 @@ public class OpenNLPService {
                 for (int i = 0; i < names.length; i++) {
                     String name = names[i];
                     Span span = spans[i];
+//                    System.out.println(field + " : " + name + " : " + span.getProb());
                     if (span.getProb() >= this.probabilityLowerLimit && content.contains(name)) nameSet.add(name);
                 }
             }
@@ -224,9 +222,12 @@ public class OpenNLPService {
 
         String content = "James Bond, 1960, New York, Italy";
 //        String content = "New York Italy";
+        long startTime = System.currentTimeMillis();
         Map<String, Set<String>> entities = service.getNamedEntities(content);
+        long endTime = System.currentTimeMillis();
 
         System.out.println(entities);
+        System.out.println("Took " + (endTime - startTime) + " milliseconds.");
     }
 
 }

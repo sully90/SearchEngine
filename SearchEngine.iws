@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a7fdd5a0-d736-4446-a942-becb50d3e1fc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/util/StringUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SearchEngine.iws" afterPath="$PROJECT_DIR$/SearchEngine.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java" afterPath="$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -185,12 +183,12 @@
       <file leaf-file-name="OpenNLPService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="90" column="93" lean-forward="false" selection-start-line="90" selection-start-column="93" selection-end-line="90" selection-end-column="93" />
+            <state relative-caret-position="126">
+              <caret line="66" column="36" lean-forward="true" selection-start-line="66" selection-start-column="36" selection-end-line="66" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#7735#7736#0" expanded="true" />
-                <element signature="e#7779#7780#0" expanded="true" />
+                <element signature="e#7785#7786#0" expanded="true" />
+                <element signature="e#7829#7830#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -900,8 +898,8 @@
           <caret line="84" column="42" lean-forward="true" selection-start-line="84" selection-start-column="42" selection-end-line="84" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7735#7736#0" expanded="true" />
-            <element signature="e#7779#7780#0" expanded="true" />
+            <element signature="e#7785#7786#0" expanded="true" />
+            <element signature="e#7829#7830#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -922,8 +920,8 @@
           <caret line="51" column="9" lean-forward="false" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7735#7736#0" expanded="true" />
-            <element signature="e#7779#7780#0" expanded="true" />
+            <element signature="e#7785#7786#0" expanded="true" />
+            <element signature="e#7829#7830#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -977,8 +975,8 @@
           <caret line="51" column="9" lean-forward="false" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7735#7736#0" expanded="true" />
-            <element signature="e#7779#7780#0" expanded="true" />
+            <element signature="e#7785#7786#0" expanded="true" />
+            <element signature="e#7829#7830#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1032,8 +1030,8 @@
           <caret line="51" column="9" lean-forward="false" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7735#7736#0" expanded="true" />
-            <element signature="e#7779#7780#0" expanded="true" />
+            <element signature="e#7785#7786#0" expanded="true" />
+            <element signature="e#7829#7830#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1087,8 +1085,8 @@
           <caret line="51" column="9" lean-forward="false" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7735#7736#0" expanded="true" />
-            <element signature="e#7779#7780#0" expanded="true" />
+            <element signature="e#7785#7786#0" expanded="true" />
+            <element signature="e#7829#7830#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1142,8 +1140,8 @@
           <caret line="51" column="9" lean-forward="false" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7735#7736#0" expanded="true" />
-            <element signature="e#7779#7780#0" expanded="true" />
+            <element signature="e#7785#7786#0" expanded="true" />
+            <element signature="e#7829#7830#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1324,12 +1322,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sully90/nlp/opennlp/OpenNLPService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="90" column="93" lean-forward="false" selection-start-line="90" selection-start-column="93" selection-end-line="90" selection-end-column="93" />
+        <state relative-caret-position="126">
+          <caret line="66" column="36" lean-forward="true" selection-start-line="66" selection-start-column="36" selection-end-line="66" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#7735#7736#0" expanded="true" />
-            <element signature="e#7779#7780#0" expanded="true" />
+            <element signature="e#7785#7786#0" expanded="true" />
+            <element signature="e#7829#7830#0" expanded="true" />
           </folding>
         </state>
       </provider>
