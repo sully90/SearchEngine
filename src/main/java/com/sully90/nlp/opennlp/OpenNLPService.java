@@ -1,6 +1,7 @@
 package com.sully90.nlp.opennlp;
 
 import com.sully90.util.Configuration;
+import com.sully90.util.StringUtils;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.sentdetect.SentenceModel;
@@ -14,20 +15,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class OpenNLPService {
 
     private static final String CONFIGURATION_KEY = "opennlp.entities.model.file.";
     private static final String MODEL_DIR = "src/main/resources/models/";
-
-    private static final Pattern CURRENCY_PATTERN = Pattern.compile("^\\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$");
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenNLPService.class);
 
@@ -62,38 +56,40 @@ public class OpenNLPService {
             if (threadLocal.get() == null || !threadLocal.get().equals(model)) {
                 threadLocal.set(model);
             }
-
             Set<String> nameSet = new HashSet<>();
 
-            List<String> ngrams = generateNgramsUpto(content, 5);
+            TokenizerME tokenizer = new TokenizerME(loadTokenizerModel());
+            String[] tokens  = tokenizer.tokenize(content);
 
-            // Combine the ngrams into a single sentence with commas, which we will use for the named
-            // entity extraction.
-            TokenizerME tokenizer = new TokenizerME(this.loadTokenizerModel());
-            StringBuilder sb = new StringBuilder();
-            Iterator<String> it = ngrams.iterator();
-
-            while (it.hasNext()) {
-                String gram = it.next();
-                sb.append(gram);
-                if (it.hasNext()) {
-                    sb.append(", ");
-                }
+            List<String> tokenList = new ArrayList<>();
+            for (String token : tokens) {
+                if (!token.isEmpty() && !token.equals(",")) tokenList.add(token);
             }
-            sb.append(".");
 
-            String[] simpleTokens = tokenizer.tokenize(sb.toString());
-//        String[] simpleTokens = SimpleTokenizer.INSTANCE.tokenize(sb.toString());
+            // Create the power-set of words
+            List<List<String>> powerSet = new LinkedList<>();
 
-            Span[] spans = new NameFinderME(model).find(simpleTokens);
+            for (int i = 1; i <= tokens.length; i++) {
+                powerSet.addAll(StringUtils.combination(tokenList, i));
+            }
 
-            String[] names = Span.spansToStrings(spans, simpleTokens);
+            if (field.equals("dates")) {
+                System.out.println(powerSet);
+            }
 
-            // Add to the named entity set if we pass the confidence test
-            for (int i = 0; i < names.length; i++) {
-                String name = names[i];
-                Span span = spans[i];
-                if (span.getProb() >= this.probabilityLowerLimit) nameSet.add(name);
+            for (List<String> listSet : powerSet) {
+                tokens = listSet.toArray(new String[listSet.size()]);
+
+                // Perform the named entity extraction
+                Span[] spans = new NameFinderME(model).find(tokens);
+                String[] names = Span.spansToStrings(spans, tokens);
+
+                // Add to the named entity set if we pass the confidence test
+                for (int i = 0; i < names.length; i++) {
+                    String name = names[i];
+                    Span span = spans[i];
+                    if (span.getProb() >= this.probabilityLowerLimit && content.contains(name)) nameSet.add(name);
+                }
             }
 
             return nameSet;
@@ -205,59 +201,6 @@ public class OpenNLPService {
         this.probabilityLowerLimit = probabilityLowerLimit;
     }
 
-    public static List<String> generateNgramsUpto(String str, int maxGramSize) {
-
-        List<String> sentence = Arrays.asList(str.split("(?!\\p{Sc})[\\W+]"));
-//        List<String> sentence = Arrays.asList(str.split("\\s+"));
-
-        List<String> ngrams = new LinkedList<>();
-        int ngramSize = 0;
-        StringBuilder sb = null;
-
-        //sentence becomes ngrams
-        for (ListIterator<String> it = sentence.listIterator(); it.hasNext();) {
-            String word = it.next();
-
-            if (containsCurrencySymbol(word)) {
-                // Format
-                DecimalFormat df = new DecimalFormat("$###,###.##");
-                Matcher matcher = CURRENCY_PATTERN.matcher(word);
-
-                if (matcher.matches()) {
-                    double value;
-                    try {
-                        value = NumberFormat.getInstance().parse(matcher.group(1)).doubleValue();
-                    } catch (ParseException e) {
-                        continue;
-                    }
-                    // Format the number and add white space after any commas
-                    word = df.format(value).replace(",", ", ");
-                }
-            }
-
-            //1- add the word itself
-            sb = new StringBuilder(word);
-            ngrams.add(word);
-            ngramSize=1;
-            it.previous();
-
-            //2- insert prevs of the word and add those too
-            while(it.hasPrevious() && ngramSize<maxGramSize){
-                sb.insert(0,' ');
-                sb.insert(0,it.previous());
-                ngrams.add(sb.toString());
-                ngramSize++;
-            }
-
-            //go back to initial position
-            while(ngramSize>0){
-                ngramSize--;
-                it.next();
-            }
-        }
-        return ngrams;
-    }
-
     private static int countWords(String content) {
         if (content == null || content.isEmpty()) {
             return 0;
@@ -279,7 +222,7 @@ public class OpenNLPService {
     public static void main(String[] args) {
         OpenNLPService service = new OpenNLPService();
 
-        String content = "$8000 New York Italy";
+        String content = "James Bond, 1960, New York, Italy";
 //        String content = "New York Italy";
         Map<String, Set<String>> entities = service.getNamedEntities(content);
 
